@@ -1,27 +1,49 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Spinner,Button, FormControl, Dropdown, Form,Alert,Row,Col,Container } from 'react-bootstrap';
-//import {Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper} from "@material-ui/core";
-// import {getAPI} from '../service/api.js';
-// import { Redirect } from 'react-router-dom';
+import { Card, Spinner,Button, FormControl, Dropdown, Form,Alert,Row,Col } from 'react-bootstrap';
+import {getAPI} from '../service/api.js';
+import axios from 'axios';
 
-// const getPostAPI = () => {
-//   return getAPI("/show");
-// };
+const instance = axios.create({
+  baseURL: "http://127.0.0.1:5000/api/login",
+});
+const getPostAPI = () => {
+  return getAPI("/showpost");
+};
+
+const getPost = async() => {
+    return await instance.get('/api/showpost');
+}
 function Index() {
     let name = "";
     const token = localStorage.getItem("token");
     console.log("token fist:"+token);
-    // const [postt, setPostt] = useState([]);
+    const [postt, setPostt] = useState([]);
     let islogin = false;
     if(token != null){
         islogin = true;
         console.log("token: "+token);
         name = token.split('=')[1];
     }
-    const onDiscusion = () =>{
-        console.log("discusion");
-        
+    useEffect(() => {
+        const requestData = async () => {
+        try {
+            const result = await getPostAPI();
+            if (result.status === 200) {
+                setPostt(result.data);
+            }
+        } catch (e) {
+            console.log("error: ",e);
+        }
+    };
+    requestData();
+    }, []);
+
+    const _onDelete = async (id) => {
+        console.log("onDelete")
+    }
+    const _onEdit = async (id) => {
+        console.log("onEdit")
     }
     return(
         <div className="container" style={{'margin-top':'20px'}} >
@@ -63,17 +85,26 @@ function Index() {
                 </ul>
             </nav>
             </div>
-            <div className="content">
-                <Card>
-                    <Card.Header>Featured</Card.Header>
+            <div className="content" style={{'padding':'10px 0px'}}>
+                {postt.map((row) =>(
+                    <Card>
+                    <Card.Header>{row.type}</Card.Header>
                     <Card.Body>
-                        <Card.Title>Special title treatment</Card.Title>
+                        <Card.Title>{row.title}</Card.Title>
                         <Card.Text>
-                            Your Content
+                            {row.detail}
                             </Card.Text>
-                            <Link onClick = {onDiscusion} to = 'discusion?'>Discusion</Link>
+                            <Link>Discusion</Link><br/>
+                            {name == row.username
+                            ?<div className="onCRUD" style={{float:'right','margin-right':'100px'}}>
+                                <Button variant="warning" onClick={() => _onEdit(row.post_ID)} style={{'margin-right':'30px'}}>Edit</Button>
+                                <Button variant="danger" onClick={() => _onDelete(row.post_ID)}>Delete</Button>
+                            </div>
+                            : "Posted by: "+name
+                            }
                     </Card.Body>
                 </Card>
+                ))}
             </div>
             <div className="footer" style={{'background-color':'gray','color':'white'}}>
                     <Row style={{padding:'10px'}}>

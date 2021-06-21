@@ -1,15 +1,16 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Spinner,Button, FormControl, Dropdown, Form,Alert } from 'react-bootstrap';
 import {useSnackbar} from 'notistack';
 import { useHistory } from 'react-router';
 import axios from 'axios';
+import {getAPI} from '../service/api.js';
 
-const submitAddpostAPI= (data) => {
-    const url = "http://127.0.0.1:5000/api/addpost"
-    return axios.post(url,data)
+const getPostAPI = () => {
+  return getAPI("/showpost");
 }
 function Discusion() {
+    const [postt, setPostt] = useState([]);
     const history = useHistory();
     const {enqueueSnackbar} = useSnackbar();
     let name = "";
@@ -27,25 +28,20 @@ function Discusion() {
         setCmt(prev =>({...prev, comment:event.target.value}));
     }
     const onSubmit = async ()=>{
-        const data = new FormData();
-        data.append('comment',cmt.comment);
-        data.append('username',cmt.username);
-        try{
-            const rs = await submitAddpostAPI(data);
-            console.log(JSON.stringify(rs))
-            if(rs.status === 200){
-                enqueueSnackbar("Successfuly !!",{variant:'success'});
-                history.push('discusion');
-            }
-            else {
-                console.log(rs.data)
-                enqueueSnackbar("Please Try Again !", { variant: "error" });
-            }
-        }catch(e){
-            console.log("error: " + e);
-            enqueueSnackbar("Please Try Again ",{variant:'error'});
-        }
     }
+        useEffect(() => {
+        const requestData = async () => {
+        try {
+            const result = await getPostAPI();
+            if (result.status === 200) {
+                setPostt(result.data);
+            }
+        } catch (e) {
+            console.log("error: ",e);
+        }
+    };
+    requestData();
+    }, []);
     return(
         <div className="container" style={{'bgcolor':''}} >
             <div className="header" >
@@ -87,21 +83,24 @@ function Discusion() {
             </nav>
             </div>
             <div className="content">
-                <Card>
-                    <Card.Header>Featured</Card.Header>
+                {postt.map((row) =>(
+                    <Card>
+                    <Card.Header>{row.type}</Card.Header>
                     <Card.Body>
-                        <Card.Title>Special title treatment</Card.Title>
+                        <Card.Title>{row.title}</Card.Title>
                         <Card.Text>
-                            Your Content
+                            {row.detail}
                             </Card.Text>
+                            <Link to = 'discusion?'>Discusion</Link>
+                    </Card.Body>
+                </Card>
+                ))}
                             {islogin
                             ?<><Form.Label>Put Your Every You Think That It ...</Form.Label>
                                 <Form.Control as='textarea' row='3' onChange = {onValueChange}></Form.Control>
                                 <Button variant="primary" type="submit" onClick = {onSubmit}>PUSH
                                 </Button></>
                             :enqueueSnackbar("Vui Long Dang Nhap Truoc!", { variant: "error" })}
-                    </Card.Body>
-                </Card>
             </div>
             <div className="footer">
                 <h4>day la footer</h4>     
