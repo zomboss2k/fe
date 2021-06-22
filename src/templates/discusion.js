@@ -2,8 +2,6 @@ import React,{useState,useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Spinner,Button, FormControl, Dropdown, Form,Alert } from 'react-bootstrap';
 import {useSnackbar} from 'notistack';
-import { useHistory } from 'react-router';
-import axios from 'axios';
 import {getAPI} from '../service/api.js';
 
 const getPostAPI = () => {
@@ -11,7 +9,6 @@ const getPostAPI = () => {
 }
 function Discusion() {
     const [postt, setPostt] = useState([]);
-    const history = useHistory();
     const {enqueueSnackbar} = useSnackbar();
     let name = "";
     const token = localStorage.getItem("token");
@@ -26,6 +23,7 @@ function Discusion() {
     const [cmt,setCmt] = useState({comment:'',username:name});
     const onValueChange = (event) =>{
         setCmt(prev =>({...prev, comment:event.target.value}));
+        console.log("cmt "+cmt)
     }
     const onSubmit = async ()=>{
     }

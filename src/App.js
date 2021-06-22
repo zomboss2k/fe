@@ -6,6 +6,7 @@ import Sigout from './templates/sigout';
 import Resigter from './templates/resigter';
 import Addpost from './templates/post';
 import Discusion from './templates/discusion';
+import Edit from './templates/edit';
 import {SnackbarProvider} from 'notistack';
 function App() {
   return (
@@ -26,6 +27,8 @@ function App() {
        </Route>
        <Route path="/discusion">
          <Discusion />
+       </Route>
+       <Route path="/edit/:id" children={<Edit />}>
        </Route>
        <Route path="/">
          <Index />

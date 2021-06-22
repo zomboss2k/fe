@@ -1,21 +1,20 @@
 import React,{useState,useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import { Link,Redirect } from 'react-router-dom';
 import { Card, Spinner,Button, FormControl, Dropdown, Form,Alert,Row,Col } from 'react-bootstrap';
 import {getAPI} from '../service/api.js';
-import axios from 'axios';
+import { useHistory } from 'react-router';
+import {useSnackbar} from 'notistack';
 
-const instance = axios.create({
-  baseURL: "http://127.0.0.1:5000/api/login",
-});
 const getPostAPI = () => {
   return getAPI("/showpost");
 };
-
-const getPost = async() => {
-    return await instance.get('/api/showpost');
+const deletePostAPI = (id) => {
+    return getAPI('/deletepost/'+id);
 }
 function Index() {
     let name = "";
+    const history = useHistory();
+    const {enqueueSnackbar} = useSnackbar();
     const token = localStorage.getItem("token");
     console.log("token fist:"+token);
     const [postt, setPostt] = useState([]);
@@ -40,10 +39,19 @@ function Index() {
     }, []);
 
     const _onDelete = async (id) => {
-        console.log("onDelete")
+        try{
+            const rs = await deletePostAPI(id);
+            if(rs.status === 200){
+                enqueueSnackbar("Xoa Thanh Cong" ,{variant:'success'});
+                history.push('/');
+            }
+        }catch(e){
+            console.log("error: ",e);
+        }
+
     }
-    const _onEdit = async (id) => {
-        console.log("onEdit")
+    const _onEdit = (id) => {
+        history.push('edit/'+id);
     }
     return(
         <div className="container" style={{'margin-top':'20px'}} >
@@ -95,7 +103,7 @@ function Index() {
                             {row.detail}
                             </Card.Text>
                             <Link>Discusion</Link><br/>
-                            {name == row.username
+                            {name === row.username
                             ?<div className="onCRUD" style={{float:'right','margin-right':'100px'}}>
                                 <Button variant="warning" onClick={() => _onEdit(row.post_ID)} style={{'margin-right':'30px'}}>Edit</Button>
                                 <Button variant="danger" onClick={() => _onDelete(row.post_ID)}>Delete</Button>
