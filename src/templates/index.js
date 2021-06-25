@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { Link,Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Card, Spinner,Button, FormControl, Dropdown, Form,Alert,Row,Col } from 'react-bootstrap';
 import {getAPI} from '../service/api.js';
 import { useHistory } from 'react-router';
@@ -11,8 +11,12 @@ const getPostAPI = () => {
 const deletePostAPI = (id) => {
     return getAPI('/deletepost/'+id);
 }
+const searchValue = (value) =>{
+    return getAPI('/search/'+value);
+}
 function Index() {
     let name = "";
+    const [searchValue,setSearchValue] = useState({value:''});
     const history = useHistory();
     const {enqueueSnackbar} = useSnackbar();
     const token = localStorage.getItem("token");
@@ -24,6 +28,9 @@ function Index() {
         console.log("token: "+token);
         name = token.split('=')[1];
     }
+    useEffect(() => {
+        document.title = "Abc Forum"
+    }, []);
     useEffect(() => {
         const requestData = async () => {
         try {
@@ -37,13 +44,17 @@ function Index() {
     };
     requestData();
     }, []);
-
+    const _onDiscusion = (id) => {
+        history.push('discusion/'+id);
+    }
     const _onDelete = async (id) => {
         try{
             const rs = await deletePostAPI(id);
             if(rs.status === 200){
                 enqueueSnackbar("Xoa Thanh Cong" ,{variant:'success'});
                 history.push('/');
+                window.location.reload(false);
+                
             }
         }catch(e){
             console.log("error: ",e);
@@ -53,28 +64,38 @@ function Index() {
     const _onEdit = (id) => {
         history.push('edit/'+id);
     }
+    const onValueChange = (event) =>{
+        setSearchValue(prev =>({...prev, value:event.target.value}));
+        console.log("your comment "+searchValue.value)
+    }
+    const _onSearch =(value) => {
+        history.push('search/'+value);
+    }
     return(
-        <div className="container" style={{'margin-top':'20px'}} >
-            <div className="header" >
+        
+        <div className="container" style={{'width':'1000px'}} >
+            <div className="header" style={{'margin-top':'20px'}}>
                 <nav class="navbar navbar-default navbar-static-top" role="navigation" style={{'background-color':'greenyellow'}}>
                 <Dropdown>
                     <Dropdown.Toggle variant="success" id="dropdown-basic"> Type
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">IT</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Learning</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Working</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Photography</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Free Lance</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/1">IT</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/2">Learning</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/3">Working</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/4">Photography</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/5">Free Lance</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/6">Other</Dropdown.Item>
                     </Dropdown.Menu>
                     </Dropdown>
-                    <Link class="navbar-brand" to={{pathname: "/"}} style={{width:'10px'}}>ABC FORUM</Link>
-                    <Spinner animation="border" role="status">
+                    <Link class="navbar-brand" to={{pathname: "/"}} style={{width:'10px'}}>
+                        <Spinner animation="border" role="status">
                         <span className="sr-only">Loading...</span>
-                    </Spinner>
+                        </Spinner>
+                    </Link>
                 <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                    <Button variant="outline-success">Search</Button>
+                    <FormControl type="text" placeholder="Search" className="mr-sm-2" name='searchValue' onChange = {onValueChange} />
+                    <Button variant="outline-success" onClick={() => _onSearch(searchValue.value)}>Search</Button>
                 </Form>
                 {name 
                 ?<Alert class="">Hello {name} !!</Alert>  
@@ -102,13 +123,13 @@ function Index() {
                         <Card.Text>
                             {row.detail}
                             </Card.Text>
-                            <Link>Discusion</Link><br/>
+                            <Button variant="link" onClick={() => _onDiscusion(row.post_ID)}>Discusion</Button>
                             {name === row.username
                             ?<div className="onCRUD" style={{float:'right','margin-right':'100px'}}>
                                 <Button variant="warning" onClick={() => _onEdit(row.post_ID)} style={{'margin-right':'30px'}}>Edit</Button>
                                 <Button variant="danger" onClick={() => _onDelete(row.post_ID)}>Delete</Button>
                             </div>
-                            : "Posted by: "+name
+                            : "Posted by: "+row.username
                             }
                     </Card.Body>
                 </Card>

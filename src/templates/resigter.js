@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
@@ -17,6 +17,9 @@ function Resigter() {
     const onValueChangeUsername = (event) => {
         setInfo(prev => ({ ...prev, username: event.target.value }));
     }
+    useEffect(() => {
+        document.title = "Resigter-Abc Forum"
+    }, []);
     const onValueChangePassword = (event) => {
         setInfo(prev => ({ ...prev, password: event.target.value }));
     }

@@ -8,6 +8,8 @@ import Addpost from './templates/post';
 import Discusion from './templates/discusion';
 import Edit from './templates/edit';
 import {SnackbarProvider} from 'notistack';
+import ShowType from './templates/showtype';
+import Search from './templates/search';
 function App() {
   return (
     <SnackbarProvider>
@@ -25,8 +27,11 @@ function App() {
        <Route path="/addpost">
          <Addpost />
        </Route>
-       <Route path="/discusion">
-         <Discusion />
+       <Route path="/search/:value" children={<Search />}>
+       </Route>
+       <Route path="/discusion/:id" children={<Discusion />}>
+       </Route>
+        <Route path="/showbyid/:id" children={<ShowType />}>
        </Route>
        <Route path="/edit/:id" children={<Edit />}>
        </Route>

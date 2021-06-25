@@ -1,21 +1,32 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios  from 'axios';
 import {useSnackbar} from 'notistack';
 import { useHistory } from 'react-router';
-import Form from 'react-bootstrap/Form';
+import { Link } from 'react-router-dom';
+import { Spinner,Button, FormControl, Dropdown, Form,Alert } from 'react-bootstrap';
 
 const submitloginAPI= (data) => {
     const url = "http://127.0.0.1:5000/api/addpost"
     return axios.post(url,data)
 }
 function AddPost(){
+     let name = "";
     const token = localStorage.getItem("token");
     console.log("token: " + token);
     const usr = token.split("=")[1];
     const history = useHistory();
     const {enqueueSnackbar} = useSnackbar();
     const [info, setInfo] = useState({title: '', tpye: '',detail:'',username:usr})
+    let islogin = false;
+    if(token != null){
+        islogin = true;
+        console.log("token: "+token);
+        name = token.split('=')[1];
+    }
+    useEffect(() => {
+        document.title = "Add Post-Abc Forum"
+    }, []);
     const onValueChangeTitle= (event) => {
         setInfo(prev =>({...prev, title:event.target.value}));
     }
@@ -52,8 +63,48 @@ function AddPost(){
     }
     return (
         
-        <div class="container" style={{width:'800px',}}>
-            <h1>THEM BAI DANG</h1>
+        <div class="container" style={{width:'1000px',}}>
+            <div className="header" >
+                <nav class="navbar navbar-default navbar-static-top" role="navigation" style={{'background-color':'greenyellow'}}>
+                <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic"> Type
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                    <Dropdown.Item href="showbyid/1">IT</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/2">Learning</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/3">Working</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/4">Photography</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/5">Free Lance</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/6">Other</Dropdown.Item>
+                    </Dropdown.Menu>
+                    </Dropdown>
+                    <Link class="navbar-brand" to={{pathname: "/"}} style={{width:'10px'}}>
+                        <Spinner animation="border" role="status">
+                        <span className="sr-only">Loading...</span>
+                        </Spinner>
+                    </Link>
+                <Form inline>
+                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                    <Button variant="outline-success">Search</Button>
+                </Form>
+                {name 
+                ?<Alert class="">Hello {name} !!</Alert>  
+                :console.log("name: "+name) }
+                <ul class="nav navbar-nav" style={{float:'right','flex-direction':'unset'}}>
+                    <li style={{width:'80px','margin-right':'10px'}}>
+                        {islogin
+                        ?<Link to={{pathname: "/addpost"}}>Add Post</Link>
+                        :<Link to={{pathname: "/login"}}>Sign in</Link>}
+                    </li>
+                    <li className="active">
+                        {islogin 
+                        ?<Link to={{pathname: "/sigout"}}>Sign Out</Link>   
+                        :<Link to={{pathname: "/resigter"}}>Sign Up</Link>}
+                    </li>
+                </ul>
+            </nav>
+            </div>
+            <h1 style={{'margin':'30px 200px',color:'chocolate'}}>THEM BAI DANG</h1>
             <div class="form-group" style={{margin:'50px 80px',padding:'10px'}}>
                 <label for="inputtitle" class="col-sm-2 control-label">Title:</label>
                 <div class="col-sm-10">

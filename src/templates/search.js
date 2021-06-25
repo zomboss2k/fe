@@ -1,69 +1,72 @@
 import React,{useState,useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Spinner,Button, FormControl, Dropdown, Form,Alert,Row,Col } from 'react-bootstrap';
-import {useSnackbar} from 'notistack';
 import {getAPI} from '../service/api.js';
-import { useParams } from 'react-router';
-import axios  from 'axios';
+import { useHistory,useParams } from 'react-router';
+import {useSnackbar} from 'notistack';
 
-const discusionAPI = (id) => {
-  return getAPI("/selectpost/"+id);
+const searchAPI = (value) => {
+  return getAPI("/search/"+value);
+};
+const deletePostAPI = (id) => {
+    return getAPI('/deletepost/'+id);
 }
-const submitcmt= (data) => {
-    const url = "http://127.0.0.1:5000/api/addcmt"
-    return axios.post(url,data)
-}
-const showbyID = (id) => {
-    return getAPI('/showcmtbyID/'+id)
-}
-function Discusion() {
-    let {id} = useParams();
-    const [postt, setPostt] = useState([]);
-    const {enqueueSnackbar} = useSnackbar();
+function Search(){
+    let {value} = useParams();
+    console.log("gt lay dc: "+value);
     let name = "";
+    const [searchValue,setSearchValue] = useState({value:''});
+    const [post,setPost] = useState({post_ID: ''})
+    const history = useHistory();
+    const {enqueueSnackbar} = useSnackbar();
     const token = localStorage.getItem("token");
     console.log("token fist:"+token);
-    
+    const [postt, setPostt] = useState([]);
     let islogin = false;
     if(token != null){
         islogin = true;
         console.log("token: "+token);
         name = token.split('=')[1];
     }
-    const [comment,setComment] = useState([]);
-    const [cmt,setCmt] = useState({comment:'',username:name,post_ID:id});
-    const onValueChange = (event) =>{
-        setCmt(prev =>({...prev, comment:event.target.value}));
-        console.log("your comment "+cmt.comment)
-    }
     useEffect(() => {
-        document.title = "Discusion-Abc Forum"
+        document.title = "Abc Forum"
     }, []);
-    const onSubmit = async ()=>{
-        const data = new FormData();
-        data.append("comment",cmt.comment);
-        data.append("username",cmt.username);
-        data.append("post_ID",cmt.post_ID);
+    const _onDiscusion = (id) => {
+        history.push('/');
+        history.push('discusion/'+id);
+    }
+    const _onDelete = async (id) => {
         try{
-            const rs = await submitcmt(data);
-            console.log(JSON.stringify(rs))
+            const rs = await deletePostAPI(id);
             if(rs.status === 200){
-                enqueueSnackbar("Successfully !!",{variant:'success'});
+                enqueueSnackbar("Xoa Thanh Cong" ,{variant:'success'});
+                history.push('/');
                 window.location.reload(false);
-            }
-            else {
-                console.log(rs.data)
-                enqueueSnackbar("Please Try Again !", { variant: "error" });
+                
             }
         }catch(e){
-            console.log("error: " + e);
-            enqueueSnackbar("Please Try Again",{variant:'error'});
+            console.log("error: ",e);
         }
+
     }
-        useEffect(() => {
+    const _onEdit = (id) => {
+        history.push('/');
+        history.push('edit/'+id);
+    }
+    const onValueChange = (event) =>{
+        setSearchValue(prev =>({...prev, value:event.target.value}));
+        console.log("your comment "+searchValue.value)
+    }
+    const _onSearch =(value) => {
+        history.push('/');
+        history.push('search/'+value);
+        window.location.reload(false);
+    }
+    useEffect(() => {
         const requestData = async (props) => {
+
         try {
-            const result = await discusionAPI(id);
+            const result = await searchAPI(value);
             if (result.status === 200) {
                 setPostt(result.data);
             }
@@ -72,20 +75,9 @@ function Discusion() {
         }
     };
     requestData();
-        const requestcmt = async (props) => {
-            try{
-                const rs = await showbyID(id);
-                if (rs.status === 200) {
-                setComment(rs.data);
-                }
-            }catch (e) {
-            console.log("error: ",e);
-        }
-        };
-    requestcmt();
     }, []);
-    return(
-        <div className="container" style={{'bgcolor':''}} >
+    return (
+        <div className="container" style={{'margin-top':'20px'}} >
             <div className="header" >
                 <nav class="navbar navbar-default navbar-static-top" role="navigation" style={{'background-color':'greenyellow'}}>
                 <Dropdown>
@@ -100,14 +92,14 @@ function Discusion() {
                     <Dropdown.Item href="../showbyid/6">Other</Dropdown.Item>
                     </Dropdown.Menu>
                     </Dropdown>
-                    <Link class="navbar-brand" to={{pathname: "/"}} style={{width:'10px'}}><Spinner animation="border" role="status">
+                    <Link class="navbar-brand" to={{pathname: "/"}} style={{width:'10px'}}>
+                        <Spinner animation="border" role="status">
                         <span className="sr-only">Loading...</span>
                         </Spinner>
                     </Link>
-                    
                 <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                    <Button variant="outline-success">Search</Button>
+                    <FormControl type="text" placeholder="Search" className="mr-sm-2" name='searchValue' onChange = {onValueChange}/>
+                    <Button variant="outline-success" onClick={() => _onSearch(searchValue.value)}>Search</Button>
                 </Form>
                 {name 
                 ?<Alert class="">Hello {name} !!</Alert>  
@@ -126,31 +118,26 @@ function Discusion() {
                 </ul>
             </nav>
             </div>
-            <div className="content">
+            <div className="content" style={{'padding':'10px 0px'}}>
                 {postt.map((row) =>(
                     <Card>
                     <Card.Header>{row.type}</Card.Header>
-                    <Card.Body  stle={{'background-color':'darkgray'}}>
+                    <Card.Body>
                         <Card.Title>{row.title}</Card.Title>
                         <Card.Text>
                             {row.detail}
                             </Card.Text>
+                            <Button variant="link" onClick={() => _onDiscusion(row.post_ID)}>Discusion</Button>
+                            {name === row.username
+                            ?<div className="onCRUD" style={{float:'right','margin-right':'100px'}}>
+                                <Button variant="warning" onClick={() => _onEdit(row.post_ID)} style={{'margin-right':'30px'}}>Edit</Button>
+                                <Button variant="danger" onClick={() => _onDelete(row.post_ID)}>Delete</Button>
+                            </div>
+                            : "Posted by: "+row.username
+                            }
                     </Card.Body>
-                    {comment.map((row) =>(<Card.Body>
-                        <Card.Text>
-                            <p>--- pushed by : {row.username} --- at: {row.time.split('.')[0]}</p>
-                            <i>{row.detail}</i>
-                        </Card.Text>
-                    </Card.Body>))}
-                    {islogin
-                            ?<><Form.Label>Put Your Every You Think That It ...</Form.Label>
-                                <Form.Control as='textarea' row='3' onChange = {onValueChange} name='comment'></Form.Control>
-                                <Button variant="primary" type="submit" onClick = {onSubmit}>PUSH
-                                </Button></>
-                            :enqueueSnackbar("Vui Long Dang Nhap Truoc!", { variant: "error" })}
                 </Card>
                 ))}
-                            
             </div>
             <div className="footer" style={{'background-color':'gray','color':'white'}}>
                     <Row style={{padding:'10px'}}>
@@ -169,8 +156,8 @@ function Discusion() {
                             </div>
                         </Col>
                     </Row>                             
-            </div>                   
+            </div>           
         </div>
     );
 }
-export default Discusion;
+export default Search;
