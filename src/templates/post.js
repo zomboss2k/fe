@@ -114,13 +114,13 @@ function AddPost(){
             <div class="form-group"style={{margin:'10px 80px',padding:'10px'}}>
                 <label for="inputtitle" class="col-sm-2 control-label">Type:</label>
                 <Form.Group style={{width:'300px','margin-left':'20px'}}>
-                <Form.Control as="select" onChange={getValueType}>
-                    <option value='it'>IT</option>
-                    <option value='learning'>Learning</option>
-                    <option value='working'>Working</option>
-                    <option value='photography'>Photography</option>
-                    <option value='freelance'>Free Lance</option>
-                    <option value='other'>Other</option>
+                <Form.Control as="select" onChange={getValueType} id='type' defaultValue='Other'>
+                    <option value='IT'>IT</option>
+                    <option value='Learning'>Learning</option>
+                    <option value='Working'>Working</option>
+                    <option value='Photography'>Photography</option>
+                    <option value='Free Lance'>Free Lance</option>
+                    <option value='Other'>Other</option>
                 </Form.Control></Form.Group>
             </div>
             <div class="form-group"style={{margin:'50px 80px',padding:'10px'}}>
@@ -129,7 +129,7 @@ function AddPost(){
                     <textarea name="detail" id="textareadetail" onChange={onValueChangeDetail}  class="form-control" rows="3" required="required"></textarea>
                 </div>
             </div><br/>
-            <button type="button" class="btn btn-success" onClick={onAdd}style={{"margin":'10px 270px','margin-bottom':'30px'}}>ADD</button>
+            <button type="button" class="btn btn-success" id='add' onClick={onAdd}style={{"margin":'10px 270px','margin-bottom':'30px'}}>ADD</button>
         </div>
     );
 }

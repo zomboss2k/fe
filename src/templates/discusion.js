@@ -145,7 +145,7 @@ function Discusion() {
                     {islogin
                             ?<><Form.Label>Put Your Every You Think That It ...</Form.Label>
                                 <Form.Control as='textarea' row='3' onChange = {onValueChange} name='comment'></Form.Control>
-                                <Button variant="primary" type="submit" onClick = {onSubmit}>PUSH
+                                <Button variant="primary" id='push-comment' type="submit" onClick = {onSubmit}>PUSH
                                 </Button></>
                             :enqueueSnackbar("Vui Long Dang Nhap Truoc!", { variant: "error" })}
                 </Card>

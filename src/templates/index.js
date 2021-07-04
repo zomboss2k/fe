@@ -95,7 +95,7 @@ function Index() {
                     </Link>
                 <Form inline>
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" name='searchValue' onChange = {onValueChange} />
-                    <Button variant="outline-success" onClick={() => _onSearch(searchValue.value)}>Search</Button>
+                    <Button variant="outline-success" id='search' onClick={() => _onSearch(searchValue.value)}>Search</Button>
                 </Form>
                 {name 
                 ?<Alert class="">Hello {name} !!</Alert>  
@@ -123,7 +123,7 @@ function Index() {
                         <Card.Text>
                             {row.detail}
                             </Card.Text>
-                            <Button variant="link" onClick={() => _onDiscusion(row.post_ID)}>Discusion</Button>
+                            <Button variant="link" id='cmt'onClick={() => _onDiscusion(row.post_ID)}>Discusion</Button>
                             {name === row.username
                             ?<div className="onCRUD" style={{float:'right','margin-right':'100px'}}>
                                 <Button variant="warning" onClick={() => _onEdit(row.post_ID)} style={{'margin-right':'30px'}}>Edit</Button>
