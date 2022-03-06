@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
@@ -53,36 +53,45 @@ function Resigter() {
     }
     return (
         <div className="container">
-            <h1 style={{ align: 'center', color: 'red', 'margin': '50px 200px' }}>Please fill all your information !!</h1>
-            <div class="form-group" style={{ margin: '100px 300px' }}>
-                <label for="inputUsername" class="col-sm-2 control-label">Username:</label>
+            <h1 style={{ align: 'center', color: 'red', 'margin': '50px 200px' }}>Điền thông tin của bạn!!</h1>
+            <div class="form-group" style={{ margin: '50px 300px' }}>
+                <label for="inputName" class="col-sm-4 control-label">Họ và tên:</label>
+                <div class="col-sm-10" style={{ width: '100px', height: '50px' }}>
+                    <input type="text" name="name" id="inputName" class="form-control"
+                        onChange={onValueChangeUsername}
+                        required="required" pattern="" title="" style={{ width: '300px', }} />
+                </div>
+                <label for="inputUsername" class="col-sm-4 control-label">Tên đăng nhập:</label>
                 <div class="col-sm-10" style={{ width: '100px', height: '50px' }}>
                     <input type="text" name="username" id="inputUsername" class="form-control"
                         onChange={onValueChangeUsername}
                         required="required" pattern="" title="" style={{ width: '300px', }} />
                 </div>
-                <br /><br />
-                <label for="inputpassword" class="col-sm-2 control-label">Password:</label>
-                <div class="col-sm-10">
-                    <input type="password" name="password" id="inputPassword" class="form-control"
-                        onChange={onValueChangePassword}
-                        required="required" title="" style={{ width: '300px', }} />
-                </div>
-                <br></br>
-                <label for="inputrepassword" class="col-sm-2 control-label">Re_Password:</label>
-                <div class="col-sm-10">
-                    <input type="password" name="repassword"
-                        onChange={onValueChangeRePassword}
-                        id="inputrepassword" class="form-control" required="required" style={{ width: '300px', }} />
-                </div>
-                <br /><br />
                 <label for="inputemail" class="col-sm-2 control-label">Email:</label>
                 <div class="col-sm-10">
                     <input type="email" name="email"
                         onChange={onValueChangeEmail}
                         id="inputemail" class="form-control" required="required" style={{ width: '300px', }} />
                 </div>
-                <br /><br />
+                <label for="inputPhoneNumber" class="col-sm-4 control-label">Số điên thoại:</label>
+                <div class="col-sm-10" style={{ width: '100px', height: '50px' }}>
+                    <input type="text" name="phoneNumber" id="inputPhoneNumber" class="form-control"
+                        onChange={onValueChangeUsername}
+                        required="required" pattern="" title="" style={{ width: '300px', }} />
+                </div>
+                <label for="inputpassword" class="col-sm-4 control-label">Mật khẩu:</label>
+                <div class="col-sm-10">
+                    <input type="password" name="password" id="inputPassword" class="form-control"
+                        onChange={onValueChangePassword}
+                        required="required" title="" style={{ width: '300px', }} />
+                </div>
+                <label for="inputrepassword" class="col-sm-6 control-label">Nhập lại mật khẩu:</label>
+                <div class="col-sm-10">
+                    <input type="password" name="repassword"
+                        onChange={onValueChangeRePassword}
+                        id="inputrepassword" class="form-control" required="required" style={{ width: '300px', }} />
+                </div>
+                
                 <button type="button" class="btn btn-success" id='btn-create'
                     onClick={onCreate}
                     style={{ align: 'center', 'margin-left': '120px', 'margin-top': '50px' }}>Create</button>
