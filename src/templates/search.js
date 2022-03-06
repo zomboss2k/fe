@@ -4,6 +4,7 @@ import { Card, Spinner,Button, FormControl, Dropdown, Form,Alert,Row,Col } from 
 import {getAPI} from '../service/api.js';
 import { useHistory,useParams } from 'react-router';
 import {useSnackbar} from 'notistack';
+import { FaCommentAlt,FaElementor,FaWaze,FaHouseDamage,FaUserSlash } from "react-icons/fa";
 
 const searchAPI = (value) => {
   return getAPI("/search/"+value);
@@ -81,7 +82,7 @@ function Search(){
             <div className="header" >
                 <nav class="navbar navbar-default navbar-static-top" role="navigation" style={{'background-color':'greenyellow'}}>
                 <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic"> Type
+                    <Dropdown.Toggle variant="success" id="dropdown-basic"> <FaElementor />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                     <Dropdown.Item href="../showbyid/1">IT</Dropdown.Item>
@@ -93,16 +94,14 @@ function Search(){
                     </Dropdown.Menu>
                     </Dropdown>
                     <Link class="navbar-brand" to={{pathname: "/"}} style={{width:'10px'}}>
-                        <Spinner animation="border" role="status">
-                        <span className="sr-only">Loading...</span>
-                        </Spinner>
+                        <FaHouseDamage />
                     </Link>
                 <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" name='searchValue' onChange = {onValueChange}/>
-                    <Button variant="outline-success" onClick={() => _onSearch(searchValue.value)}>Search</Button>
+                    <FormControl type="text" placeholder="enter your key..." className="mr-sm-2" name='searchValue' onChange = {onValueChange}/>
+                    <Button variant="outline-success" id='search'onClick={() => _onSearch(searchValue.value)}>Search</Button>
                 </Form>
                 {name 
-                ?<Alert class="">Hello {name} !!</Alert>  
+                ?<Alert class="" style={{color:'chocolate'}}><FaWaze/> {name}</Alert>  
                 :console.log("name: "+name) }
                 <ul class="nav navbar-nav" style={{float:'right','flex-direction':'unset'}}>
                     <li style={{width:'80px','margin-right':'10px'}}>
@@ -112,7 +111,7 @@ function Search(){
                     </li>
                     <li className="active">
                         {islogin 
-                        ?<Link to={{pathname: "/sigout"}}>Sign Out</Link>   
+                        ?<Link to={{pathname: "/sigout"}}><FaUserSlash /></Link>   
                         :<Link to={{pathname: "/resigter"}}>Sign Up</Link>}
                     </li>
                 </ul>

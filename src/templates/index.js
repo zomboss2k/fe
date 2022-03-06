@@ -4,6 +4,7 @@ import { Card, Spinner,Button, FormControl, Dropdown, Form,Alert,Row,Col } from 
 import {getAPI} from '../service/api.js';
 import { useHistory } from 'react-router';
 import {useSnackbar} from 'notistack';
+import { FaCommentAlt,FaElementor,FaWaze,FaHouseDamage,FaUserSlash } from "react-icons/fa";
 
 const getPostAPI = () => {
   return getAPI("/showpost");
@@ -69,15 +70,16 @@ function Index() {
         console.log("your comment "+searchValue.value)
     }
     const _onSearch =(value) => {
-        history.push('search/'+value);
+        console.log(value);
+        history.push('/search/'+value)
     }
     return(
         
-        <div className="container" style={{'width':'1000px'}} >
+        <div className="container" style={{'width':''}} >
             <div className="header" style={{'margin-top':'20px'}}>
                 <nav class="navbar navbar-default navbar-static-top" role="navigation" style={{'background-color':'greenyellow'}}>
                 <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic"> Type
+                    <Dropdown.Toggle variant="success" id="dropdown-basic"> <FaElementor />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                     <Dropdown.Item href="showbyid/1">IT</Dropdown.Item>
@@ -89,16 +91,14 @@ function Index() {
                     </Dropdown.Menu>
                     </Dropdown>
                     <Link class="navbar-brand" to={{pathname: "/"}} style={{width:'10px'}}>
-                        <Spinner animation="border" role="status">
-                        <span className="sr-only">Loading...</span>
-                        </Spinner>
+                        <FaHouseDamage />
                     </Link>
                 <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" name='searchValue' onChange = {onValueChange} />
+                    <FormControl type="text" placeholder="enter your key..." className="mr-sm-2" name='searchValue' onChange = {onValueChange}/>
                     <Button variant="outline-success" id='search' onClick={() => _onSearch(searchValue.value)}>Search</Button>
                 </Form>
                 {name 
-                ?<Alert class="">Hello {name} !!</Alert>  
+                ?<Alert class="" style={{color:'chocolate'}}><FaWaze/> {name}</Alert>  
                 :console.log("name: "+name) }
                 <ul class="nav navbar-nav" style={{float:'right','flex-direction':'unset'}}>
                     <li style={{width:'80px','margin-right':'10px'}}>
@@ -108,7 +108,7 @@ function Index() {
                     </li>
                     <li className="active">
                         {islogin 
-                        ?<Link to={{pathname: "/sigout"}}>Sign Out</Link>   
+                        ?<Link to={{pathname: "/sigout"}}><FaUserSlash /></Link>   
                         :<Link to={{pathname: "/resigter"}}>Sign Up</Link>}
                     </li>
                 </ul>
@@ -123,13 +123,13 @@ function Index() {
                         <Card.Text>
                             {row.detail}
                             </Card.Text>
-                            <Button variant="link" id='cmt'onClick={() => _onDiscusion(row.post_ID)}>Discusion</Button>
+                            <Button variant="link" id='cmt'onClick={() => _onDiscusion(row.post_ID)}><FaCommentAlt /> Discusion</Button>
                             {name === row.username
                             ?<div className="onCRUD" style={{float:'right','margin-right':'100px'}}>
                                 <Button variant="warning" onClick={() => _onEdit(row.post_ID)} style={{'margin-right':'30px'}}>Edit</Button>
                                 <Button variant="danger" onClick={() => _onDelete(row.post_ID)}>Delete</Button>
                             </div>
-                            : "Posted by: "+row.username
+                            : <i style={{'color':'green','font-weight':'italic','font-size':'15px'}}>Posted by : {row.username}</i>
                             }
                     </Card.Body>
                 </Card>

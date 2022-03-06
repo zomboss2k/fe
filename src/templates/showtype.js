@@ -4,6 +4,7 @@ import { Card, Spinner,Button, FormControl, Dropdown, Form,Alert,Row,Col } from 
 import {getAPI} from '../service/api.js';
 import { useHistory,useParams } from 'react-router';
 import {useSnackbar} from 'notistack';
+import { FaCommentAlt,FaElementor,FaWaze,FaHouseDamage,FaUserSlash } from "react-icons/fa";
 
 const getPostAPI = (id) => {
   return getAPI("/showbytype/"+id);
@@ -14,6 +15,7 @@ const deletePostAPI = (id) => {
 function ShowType(){
     let {id} = useParams();
     let name = "";
+    const [searchValue,setSearchValue] = useState({value:''});
     const history = useHistory();
     const {enqueueSnackbar} = useSnackbar();
     const token = localStorage.getItem("token");
@@ -31,6 +33,14 @@ function ShowType(){
     const _onDiscusion = (id) => {
         history.push('/');
         history.push('discusion/'+id);
+    }
+    const onValueChange = (event) =>{
+        setSearchValue(prev =>({...prev, value:event.target.value}));
+        console.log("your comment "+searchValue.value)
+    }
+    const _onSearch =(value) => {
+        console.log(value);
+        history.push('/search/'+value)
     }
     const _onDelete = async (id) => {
         try{
@@ -72,28 +82,26 @@ function ShowType(){
             <div className="header" >
                 <nav class="navbar navbar-default navbar-static-top" role="navigation" style={{'background-color':'greenyellow'}}>
                 <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic"> Type
+                    <Dropdown.Toggle variant="success" id="dropdown-basic"> <FaElementor />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                    <Dropdown.Item href="1">IT</Dropdown.Item>
-                    <Dropdown.Item href="2">Learning</Dropdown.Item>
-                    <Dropdown.Item href="3">Working</Dropdown.Item>
-                    <Dropdown.Item href="4">Photography</Dropdown.Item>
-                    <Dropdown.Item href="5">Free Lance</Dropdown.Item>
-                    <Dropdown.Item href="6">Other</Dropdown.Item>
+                    <Dropdown.Item href="../showbyid/1">IT</Dropdown.Item>
+                    <Dropdown.Item href="../showbyid/2">Learning</Dropdown.Item>
+                    <Dropdown.Item href="../showbyid/3">Working</Dropdown.Item>
+                    <Dropdown.Item href="../showbyid/4">Photography</Dropdown.Item>
+                    <Dropdown.Item href="../showbyid/5">Free Lance</Dropdown.Item>
+                    <Dropdown.Item href="../showbyid/6">Other</Dropdown.Item>
                     </Dropdown.Menu>
                     </Dropdown>
                     <Link class="navbar-brand" to={{pathname: "/"}} style={{width:'10px'}}>
-                        <Spinner animation="border" role="status">
-                        <span className="sr-only">Loading...</span>
-                        </Spinner>
+                        <FaHouseDamage />
                     </Link>
                 <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                    <Button variant="outline-success">Search</Button>
+                    <FormControl type="text" placeholder="enter your key..." className="mr-sm-2" name='searchValue'onChange = {onValueChange}/>
+                    <Button variant="outline-success" id='search' onClick={() => _onSearch(searchValue.value)}>Search</Button>
                 </Form>
                 {name 
-                ?<Alert class="">Hello {name} !!</Alert>  
+                ?<Alert class="" style={{color:'chocolate'}}><FaWaze/> {name}</Alert>  
                 :console.log("name: "+name) }
                 <ul class="nav navbar-nav" style={{float:'right','flex-direction':'unset'}}>
                     <li style={{width:'80px','margin-right':'10px'}}>
@@ -103,7 +111,7 @@ function ShowType(){
                     </li>
                     <li className="active">
                         {islogin 
-                        ?<Link to={{pathname: "/sigout"}}>Sign Out</Link>   
+                        ?<Link to={{pathname: "/sigout"}}><FaUserSlash /></Link>   
                         :<Link to={{pathname: "/resigter"}}>Sign Up</Link>}
                     </li>
                 </ul>

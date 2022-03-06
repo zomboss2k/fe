@@ -1,10 +1,11 @@
 import React,{useState,useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Spinner,Button, FormControl, Dropdown, Form,Alert,Row,Col } from 'react-bootstrap';
+import { Card,Button, FormControl, Dropdown, Form,Alert,Row,Col } from 'react-bootstrap';
 import {useSnackbar} from 'notistack';
 import {getAPI} from '../service/api.js';
-import { useParams } from 'react-router';
+import { useParams,useHistory } from 'react-router';
 import axios  from 'axios';
+import { FaTrash,FaElementor,FaWaze,FaHouseDamage,FaUserSlash,FaRegHandPointRight,FaThumbsUp } from "react-icons/fa";
 
 const discusionAPI = (id) => {
   return getAPI("/selectpost/"+id);
@@ -16,10 +17,21 @@ const submitcmt= (data) => {
 const showbyID = (id) => {
     return getAPI('/showcmtbyID/'+id)
 }
+const deleteComment = (id) => {
+    return getAPI('/deletecomment/'+id)
+}
+const reportComment = (id) => {
+    return getAPI('/report/'+id)
+}
+const like = (id) => {
+    return getAPI('/like/'+id)
+}
 function Discusion() {
     let {id} = useParams();
+    const history = useHistory();
     const [postt, setPostt] = useState([]);
     const {enqueueSnackbar} = useSnackbar();
+    const [searchValue,setSearchValue] = useState({value:''});
     let name = "";
     const token = localStorage.getItem("token");
     console.log("token fist:"+token);
@@ -30,6 +42,14 @@ function Discusion() {
         console.log("token: "+token);
         name = token.split('=')[1];
     }
+    const onValueSChange = (event) =>{
+        setSearchValue(prev =>({...prev, value:event.target.value}));
+        console.log("your comment "+searchValue.value)
+    }
+    const _onSearch =(value) => {
+        console.log(value);
+        history.push('/search/'+value)
+    }
     const [comment,setComment] = useState([]);
     const [cmt,setCmt] = useState({comment:'',username:name,post_ID:id});
     const onValueChange = (event) =>{
@@ -39,6 +59,33 @@ function Discusion() {
     useEffect(() => {
         document.title = "Discusion-Abc Forum"
     }, []);
+    const _onDeleteCmt = async (id)=> {
+        try {
+            const rs = await deleteComment(id);
+            if(rs.status == 200){
+                enqueueSnackbar("Xoa Thanh Cong" ,{variant:'success'});
+                window.location.reload(false);
+            }
+        }catch(e) {
+            console.log("error: ",e);
+        }
+    }
+    const _onReport = async (id) =>{
+        try {
+            const rs = await reportComment(id);
+            if(rs.status == 200){
+                enqueueSnackbar("Report Thanh Cong" ,{variant:'success'});
+                window.location.reload(false);
+            }
+        }catch(e) {
+            console.log("error: ",e);
+        }
+    }
+    const _onLike = (id) => {
+        like(id);
+        console.log(id)
+        window.location.reload(false);
+    }
     const onSubmit = async ()=>{
         const data = new FormData();
         data.append("comment",cmt.comment);
@@ -89,7 +136,7 @@ function Discusion() {
             <div className="header" >
                 <nav class="navbar navbar-default navbar-static-top" role="navigation" style={{'background-color':'greenyellow'}}>
                 <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic"> Type
+                    <Dropdown.Toggle variant="success" id="dropdown-basic"> <FaElementor />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                     <Dropdown.Item href="../showbyid/1">IT</Dropdown.Item>
@@ -100,17 +147,15 @@ function Discusion() {
                     <Dropdown.Item href="../showbyid/6">Other</Dropdown.Item>
                     </Dropdown.Menu>
                     </Dropdown>
-                    <Link class="navbar-brand" to={{pathname: "/"}} style={{width:'10px'}}><Spinner animation="border" role="status">
-                        <span className="sr-only">Loading...</span>
-                        </Spinner>
+                    <Link class="navbar-brand" to={{pathname: "/"}} style={{width:'10px'}}>
+                        <FaHouseDamage />
                     </Link>
-                    
                 <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                    <Button variant="outline-success">Search</Button>
+                    <FormControl type="text" placeholder="enter your key..." className="mr-sm-2" name='searchValue'onChange = {onValueSChange}/>
+                    <Button variant="outline-success" id='search'onClick={() => _onSearch(searchValue.value)}>Search</Button>
                 </Form>
                 {name 
-                ?<Alert class="">Hello {name} !!</Alert>  
+                ?<Alert class="" style={{color:'chocolate'}}><FaWaze/> {name}</Alert>  
                 :console.log("name: "+name) }
                 <ul class="nav navbar-nav" style={{float:'right','flex-direction':'unset'}}>
                     <li style={{width:'80px','margin-right':'10px'}}>
@@ -120,7 +165,7 @@ function Discusion() {
                     </li>
                     <li className="active">
                         {islogin 
-                        ?<Link to={{pathname: "/sigout"}}>Sign Out</Link>   
+                        ?<Link to={{pathname: "/sigout"}}><FaUserSlash /></Link>   
                         :<Link to={{pathname: "/resigter"}}>Sign Up</Link>}
                     </li>
                 </ul>
@@ -138,12 +183,15 @@ function Discusion() {
                     </Card.Body>
                     {comment.map((row) =>(<Card.Body>
                         <Card.Text>
-                            <p>--- pushed by : {row.username} --- at: {row.time.split('.')[0]}</p>
-                            <i>{row.detail}</i>
+                            <p>--- pushed by : {row.username} --- at: {row.time.split('.')[0]} <Button variant="link" id='like'onClick={() => _onLike(row.comment_ID)}><FaThumbsUp /></Button>
+                            {name == row.username 
+                            ?<Button variant="link" id='delcmt'onClick={() => _onDeleteCmt(row.comment_ID)}><FaTrash /></Button>
+                            :<Button variant="link" id='report'onClick={() => _onReport(row.comment_ID)}>Report</Button>}</p> 
+                            <FaRegHandPointRight /><b>{row.point} | </b><i>{row.detail}</i>
                         </Card.Text>
                     </Card.Body>))}
                     {islogin
-                            ?<><Form.Label>Put Your Every You Think That It ...</Form.Label>
+                            ?<><Form.Label style={{'font-weight':'bold','margin-left':'10px','font-size':'30px'}}>Put Your Every You Think That It ...</Form.Label>
                                 <Form.Control as='textarea' row='3' onChange = {onValueChange} name='comment'></Form.Control>
                                 <Button variant="primary" id='push-comment' type="submit" onClick = {onSubmit}>PUSH
                                 </Button></>

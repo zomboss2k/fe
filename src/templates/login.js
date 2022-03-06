@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {makeStyles} from "@material-ui/core/styles";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import {useSnackbar} from 'notistack';
@@ -7,12 +6,6 @@ import { useHistory } from 'react-router';
 import { Redirect } from 'react-router-dom';
 
 
-export const styles  = makeStyles({
-    formStyles: {
-        align:'center',
-        padding:'10px',
-    },
-});
 const submitloginAPI= (data) => {
     const url = "http://127.0.0.1:5000/api/login"
     return axios.post(url,data)

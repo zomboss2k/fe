@@ -5,6 +5,7 @@ import {useSnackbar} from 'notistack';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Spinner,Button, FormControl, Dropdown, Form,Alert } from 'react-bootstrap';
+import { FaCommentAlt,FaElementor,FaWaze,FaHouseDamage,FaUserSlash } from "react-icons/fa";
 
 const submitloginAPI= (data) => {
     const url = "http://127.0.0.1:5000/api/addpost"
@@ -67,7 +68,7 @@ function AddPost(){
             <div className="header" >
                 <nav class="navbar navbar-default navbar-static-top" role="navigation" style={{'background-color':'greenyellow'}}>
                 <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic"> Type
+                    <Dropdown.Toggle variant="success" id="dropdown-basic"> <FaElementor />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                     <Dropdown.Item href="showbyid/1">IT</Dropdown.Item>
@@ -79,16 +80,14 @@ function AddPost(){
                     </Dropdown.Menu>
                     </Dropdown>
                     <Link class="navbar-brand" to={{pathname: "/"}} style={{width:'10px'}}>
-                        <Spinner animation="border" role="status">
-                        <span className="sr-only">Loading...</span>
-                        </Spinner>
+                        <FaHouseDamage />
                     </Link>
                 <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                    <Button variant="outline-success">Search</Button>
+                    <FormControl type="text" placeholder="enter your key..." className="mr-sm-2" name='searchValue'/>
+                    <Button variant="outline-success" id='search'>Search</Button>
                 </Form>
                 {name 
-                ?<Alert class="">Hello {name} !!</Alert>  
+                ?<Alert class="" style={{color:'chocolate'}}><FaWaze/> {name}</Alert>  
                 :console.log("name: "+name) }
                 <ul class="nav navbar-nav" style={{float:'right','flex-direction':'unset'}}>
                     <li style={{width:'80px','margin-right':'10px'}}>
@@ -98,7 +97,7 @@ function AddPost(){
                     </li>
                     <li className="active">
                         {islogin 
-                        ?<Link to={{pathname: "/sigout"}}>Sign Out</Link>   
+                        ?<Link to={{pathname: "/sigout"}}><FaUserSlash /></Link>   
                         :<Link to={{pathname: "/resigter"}}>Sign Up</Link>}
                     </li>
                 </ul>
