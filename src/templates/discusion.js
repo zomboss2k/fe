@@ -5,7 +5,10 @@ import {useSnackbar} from 'notistack';
 import {getAPI} from '../service/api.js';
 import { useParams,useHistory } from 'react-router';
 import axios  from 'axios';
+import Images from './images'
 import { FaTrash,FaElementor,FaWaze,FaHouseDamage,FaUserSlash,FaRegHandPointRight,FaThumbsUp } from "react-icons/fa";
+import "./style.css";
+import "../App.css";
 
 const discusionAPI = (id) => {
   return getAPI("/selectpost/"+id);
@@ -131,6 +134,9 @@ function Discusion() {
         };
     requestcmt();
     }, []);
+
+    const [selectedImg, setSelectedImg] = useState(Images[0]);
+
     return(
         <div className="container" style={{'bgcolor':''}} >
             <div className="header" >
@@ -174,29 +180,49 @@ function Discusion() {
             <div className="content">
                 {postt.map((row) =>(
                     <Card>
-                    <Card.Header>{row.type}</Card.Header>
-                    <Card.Body  stle={{'background-color':'darkgray'}}>
-                        <Card.Title>{row.title}</Card.Title>
-                        <Card.Text>
-                            {row.detail}
-                            </Card.Text>
-                    </Card.Body>
-                    {comment.map((row) =>(<Card.Body>
-                        <Card.Text>
-                            <p>--- pushed by : {row.username} --- at: {row.time.split('.')[0]} <Button variant="link" id='like'onClick={() => _onLike(row.comment_ID)}><FaThumbsUp /></Button>
-                            {name == row.username 
-                            ?<Button variant="link" id='delcmt'onClick={() => _onDeleteCmt(row.comment_ID)}><FaTrash /></Button>
-                            :<Button variant="link" id='report'onClick={() => _onReport(row.comment_ID)}>Report</Button>}</p> 
-                            <FaRegHandPointRight /><b>{row.point} | </b><i>{row.detail}</i>
-                        </Card.Text>
-                    </Card.Body>))}
-                    {islogin
-                            ?<><Form.Label style={{'font-weight':'bold','margin-left':'10px','font-size':'30px'}}>Put Your Every You Think That It ...</Form.Label>
-                                <Form.Control as='textarea' row='3' onChange = {onValueChange} name='comment'></Form.Control>
-                                <Button variant="primary" id='push-comment' type="submit" onClick = {onSubmit}>PUSH
-                                </Button></>
-                            :enqueueSnackbar("Vui Long Dang Nhap Truoc!", { variant: "error" })}
-                </Card>
+                        <Card.Header>{row.type}</Card.Header>
+                        <div className="row">
+                            <div className="col">
+                                <div className="container">
+                                    <img src={selectedImg} alt="Selected" class="selected img-thumbnail"></img>
+                                </div>
+                                <div className = "imgContainer">
+                                    {Images.map((img, index) => (
+                                        <img 
+                                            style={{ border: selectedImg === img ? "4px solid #ccc" : ""}}
+                                            key = {index} 
+                                            src={img} 
+                                            alt="dog"
+                                            onClick = {()=> setSelectedImg(img)}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="col">
+                                <Card.Body  stle={{'background-color':'darkgray'}}>
+                                    <Card.Title>{row.title}</Card.Title>
+                                    <Card.Text>
+                                        {row.detail}
+                                        </Card.Text>
+                                </Card.Body>
+                                {comment.map((row) =>(<Card.Body>
+                                    <Card.Text>
+                                        <p>--- pushed by : {row.username} --- at: {row.time.split('.')[0]} <Button variant="link" id='like'onClick={() => _onLike(row.comment_ID)}><FaThumbsUp /></Button>
+                                        {name == row.username 
+                                        ?<Button variant="link" id='delcmt'onClick={() => _onDeleteCmt(row.comment_ID)}><FaTrash /></Button>
+                                        :<Button variant="link" id='report'onClick={() => _onReport(row.comment_ID)}>Report</Button>}</p> 
+                                        <FaRegHandPointRight /><b>{row.point} | </b><i>{row.detail}</i>
+                                    </Card.Text>
+                                </Card.Body>))}
+                            </div>
+                        </div>
+                        {islogin
+                                ?<><Form.Label style={{'font-weight':'bold','margin-left':'10px','font-size':'30px'}}>Put Your Every You Think That It ...</Form.Label>
+                                    <Form.Control as='textarea' row='3' onChange = {onValueChange} name='comment'></Form.Control>
+                                    <Button variant="primary" id='push-comment' type="submit" onClick = {onSubmit}>PUSH
+                                    </Button></>
+                                :enqueueSnackbar("Vui Long Dang Nhap Truoc!", { variant: "error" })}
+                    </Card>
                 ))}
                             
             </div>
