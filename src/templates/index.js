@@ -119,23 +119,25 @@ function Index() {
                     <Card>
                         <Card.Header>{row.type}</Card.Header>
                         <div className="row">
-                            <div className="col" >
-                                <img src="https://img.nhandan.com.vn/Files/Images/2020/07/26/nhat_cay-1595747664059.jpg" alt="dogs" class="img-thumbnail" style={{'width': '400px', 'padding': '0px 15px'}}></img>
+                            <div style={{'padding-left':'20px'}} >
+                                <Button variant="link" id='cmt'onClick={() => _onDiscusion(row.post_ID)}>
+                                        <img src="https://img.nhandan.com.vn/Files/Images/2020/07/26/nhat_cay-1595747664059.jpg" alt="dogs" class="img-thumbnail" style={{'width': '300px', 'padding': '0px 15px'}}></img>
+                                    </Button>
+                                
                             </div>
                             <div className="col">
                                 <Card.Body>
-                                    <Button variant="link" id='cmt'onClick={() => _onDiscusion(row.post_ID)}>
                                         <Card.Title>{row.title}</Card.Title>
-                                    </Button>
-                                    {/* <Card.Text>{row.detail}</Card.Text> */}
-                                        {/* <Button variant="link" id='cmt'onClick={() => _onDiscusion(row.post_ID)}><FaCommentAlt /> Discusion</Button> */}
-                                        {name === row.username
+                                    {name === row.username
                                         ?<div className="onCRUD" style={{float:'right','margin-right':'100px'}}>
                                             <Button variant="warning" onClick={() => _onEdit(row.post_ID)} style={{'margin-right':'30px'}}>Edit</Button>
                                             <Button variant="danger" onClick={() => _onDelete(row.post_ID)}>Delete</Button>
                                         </div>
-                                        : <i style={{'color':'green','font-weight':'italic','font-size':'15px'}}>Posted by : {row.username}</i>
+                                        : <i style={{'color':'green','font-weight':'italic','font-size':'15px'}}>Người đăng : {row.username}</i>
                                         }
+                                    <Card.Text>{row.detail}</Card.Text>
+                                        {/* <Button variant="link" id='cmt'onClick={() => _onDiscusion(row.post_ID)}><FaCommentAlt /> Discusion</Button> */}
+                                        
                                 </Card.Body>
                             </div>
                         </div>
