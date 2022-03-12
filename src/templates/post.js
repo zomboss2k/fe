@@ -213,7 +213,7 @@ function AddPost() {
                 <div className="col">
                     <section>
                         <label className="labelImgs">
-                            + Add Images
+                            + Thêm Ảnh
                             <br />
                             <span>up to 10 images</span>
                             <input
