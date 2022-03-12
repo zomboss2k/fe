@@ -71,11 +71,11 @@ function AddPost(){
                     <Dropdown.Toggle variant="success" id="dropdown-basic"> <FaElementor />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                    <Dropdown.Item href="showbyid/1">IT</Dropdown.Item>
-                    <Dropdown.Item href="showbyid/2">Learning</Dropdown.Item>
-                    <Dropdown.Item href="showbyid/3">Working</Dropdown.Item>
-                    <Dropdown.Item href="showbyid/4">Photography</Dropdown.Item>
-                    <Dropdown.Item href="showbyid/5">Free Lance</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/1">Cho Thuê</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/2">Cần Thuê</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/3">Ở Ghép</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/4">Mua Bán, Trao đổi</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/5">Căn Hộ</Dropdown.Item>
                     <Dropdown.Item href="showbyid/6">Other</Dropdown.Item>
                     </Dropdown.Menu>
                     </Dropdown>
@@ -114,11 +114,11 @@ function AddPost(){
                 <label for="inputtitle" class="col-sm-2 control-label">Type:</label>
                 <Form.Group style={{width:'300px','margin-left':'20px'}}>
                 <Form.Control as="select" onChange={getValueType} id='type' defaultValue='Other'>
-                    <option value='IT'>IT</option>
-                    <option value='Learning'>Learning</option>
-                    <option value='Working'>Working</option>
-                    <option value='Photography'>Photography</option>
-                    <option value='Free Lance'>Free Lance</option>
+                    <option value='IT'>Cho Thuê</option>
+                    <option value='Learning'>Cần Thuê</option>
+                    <option value='Working'>Ở Ghép</option>
+                    <option value='Photography'>Mua Bán, Trao đổi</option>
+                    <option value='Free Lance'>Căn Hộ</option>
                     <option value='Other'>Other</option>
                 </Form.Control></Form.Group>
             </div>

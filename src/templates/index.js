@@ -4,7 +4,8 @@ import { Card, Spinner,Button, FormControl, Dropdown, Form,Alert,Row,Col } from 
 import {getAPI} from '../service/api.js';
 import { useHistory } from 'react-router';
 import {useSnackbar} from 'notistack';
-import { FaCommentAlt,FaElementor,FaWaze,FaHouseDamage,FaUserSlash } from "react-icons/fa";
+import { FaRegTrashAlt,FaCommentAlt,FaElementor,FaWaze,FaHouseDamage,FaUserSlash } from "react-icons/fa";
+import {FiEdit} from "react-icons/fi";
 
 const getPostAPI = () => {
   return getAPI("/showpost");
@@ -23,6 +24,7 @@ function Index() {
     const token = localStorage.getItem("token");
     console.log("token fist:"+token);
     const [postt, setPostt] = useState([]);
+    const [ismyaccount, setissmyaccount] = useState(false);
     let islogin = false;
     if(token != null){
         islogin = true;
@@ -82,11 +84,11 @@ function Index() {
                     <Dropdown.Toggle variant="success" id="dropdown-basic"> <FaElementor />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                    <Dropdown.Item href="showbyid/1">IT</Dropdown.Item>
-                    <Dropdown.Item href="showbyid/2">Learning</Dropdown.Item>
-                    <Dropdown.Item href="showbyid/3">Working</Dropdown.Item>
-                    <Dropdown.Item href="showbyid/4">Photography</Dropdown.Item>
-                    <Dropdown.Item href="showbyid/5">Free Lance</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/1">Cho Thuê</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/2">Cần Thuê</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/3">Ở Ghép</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/4">Mua Bán, Trao đổi</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/5">Căn Hộ</Dropdown.Item>
                     <Dropdown.Item href="showbyid/6">Other</Dropdown.Item>
                     </Dropdown.Menu>
                     </Dropdown>
@@ -126,18 +128,20 @@ function Index() {
                                 
                             </div>
                             <div className="col">
+                                
                                 <Card.Body>
                                         <Card.Title>{row.title}</Card.Title>
                                     {name === row.username
                                         ?<div className="onCRUD" style={{float:'right','margin-right':'100px'}}>
-                                            <Button variant="warning" onClick={() => _onEdit(row.post_ID)} style={{'margin-right':'30px'}}>Edit</Button>
-                                            <Button variant="danger" onClick={() => _onDelete(row.post_ID)}>Delete</Button>
+                                            <Button variant="warning" onClick={() => _onEdit(row.post_ID)} style={{'margin-right':'30px'}}><FiEdit /></Button>
+                                            <Button variant="danger" onClick={() => _onDelete(row.post_ID)}><FaRegTrashAlt/></Button>
                                         </div>
-                                        : <i style={{'color':'green','font-weight':'italic','font-size':'15px'}}>Người đăng : {row.username}</i>
+                                        :<i style={{'color':'green','font-weight':'italic','font-size':'15px'}}>Người đăng : {row.username}</i>
                                         }
                                     <Card.Text>{row.detail}</Card.Text>
-                                        {/* <Button variant="link" id='cmt'onClick={() => _onDiscusion(row.post_ID)}><FaCommentAlt /> Discusion</Button> */}
-                                        
+                                        {/*     <Button variant="link" id='cmt'onClick={() => _onDiscusion(row.post_ID)}><FaCommentAlt /> Discusion</Button> */}
+                                    
+                                       
                                 </Card.Body>
                             </div>
                         </div>
