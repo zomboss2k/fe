@@ -119,17 +119,19 @@ function Index() {
                 {postt.map((row) =>(
                     <Card>
                         <Card.Header>{row.type}
-                        <div className="onCRUD" style={{float:'right','margin-right':'100px'}}>
+                        {name == row.username
+                        ?<div className="onCRUD" style={{float:'right','margin-right':'100px'}}>
                             <Button variant="warning" onClick={() => _onEdit(row.post_ID)} style={{'margin-right':'30px'}}><FiEdit /></Button>
                             <Button variant="danger" onClick={() => _onDelete(row.post_ID)}><FaRegTrashAlt/></Button>
                         </div>
+                        :""
+                        }
                         </Card.Header>
                         <div className="row">
                             <div style={{'padding-left':'20px'}} >
                                 <Button variant="link" id='cmt'onClick={() => _onDiscusion(row.post_ID)}>
                                         <img src="https://img.nhandan.com.vn/Files/Images/2020/07/26/nhat_cay-1595747664059.jpg" alt="dogs" class="img-thumbnail" style={{'width': '300px', 'padding': '0px 15px'}}></img>
                                     </Button>
-                                
                             </div>
                             <div className="col">
                                 
@@ -140,9 +142,7 @@ function Index() {
                                         :<i style={{'color':'green','font-weight':'italic','font-size':'15px'}}>Người đăng : {row.username}</i>
                                         }
                                     <Card.Text>{row.detail}</Card.Text>
-                                        {/*     <Button variant="link" id='cmt'onClick={() => _onDiscusion(row.post_ID)}><FaCommentAlt /> Discusion</Button> */}
-                                    
-                                       
+                                        {/*     <Button variant="link" id='cmt'onClick={() => _onDiscusion(row.post_ID)}><FaCommentAlt /> Discusion</Button> */}  
                                 </Card.Body>
                                 
                             </div>
