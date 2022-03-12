@@ -11,6 +11,7 @@ import {SnackbarProvider} from 'notistack';
 import ShowType from './templates/showtype';
 import Search from './templates/search';
 import Chat from './templates/chat';
+import Dashboard from './dashboard/Dashboard';
 function App() {
   return (
     <SnackbarProvider>
@@ -30,6 +31,9 @@ function App() {
        </Route>
        <Route path="/chat">
           <Chat />
+        </Route>
+        <Route path="/dashboard">
+          <Dashboard />
         </Route>
        <Route path="/search/:value" children={<Search />}>
        </Route>

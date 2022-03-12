@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router';
 import { Redirect,Link } from 'react-router-dom';
 import "./login.css"
+import {getAPI} from '../service/api.js';
 
 
 const submitloginAPI = (data) => {
     const url = "http://127.0.0.1:5000/api/login"
     return axios.post(url, data)
 }
+const getuserAPI = () => {
+  return getAPI("/getalluser");
+};
 function Login() {
     const history = useHistory();
+    const [account,setAccount] = useState([]);
     const token = localStorage.getItem("token");
     console.log("token fist :" + token);
     const { enqueueSnackbar } = useSnackbar();
@@ -29,6 +34,19 @@ function Login() {
     const onValueChangePassword = (event) => {
         setInfo(prev => ({ ...prev, password: event.target.value }));
     }
+    useEffect(() => {
+        const requestData = async () => {
+        try {
+            const result = await getuserAPI();
+            if (result.status === 200) {
+                setAccount(result.data);
+            }
+        } catch (e) {
+            console.log("error: ",e);
+        }
+    };
+    requestData();
+    }, []);
     const onSubmit = async () => {
         const data = new FormData();
         data.append("username", info.username);
@@ -41,8 +59,15 @@ function Login() {
                 enqueueSnackbar("Dang Nhap Thanh Cong", { variant: 'success' });
                 console.log("rs.xsrfCookieName: " + rs.xsrfCookieName);
                 console.log("token: " + token);
-                history.push('index');
-                <Redirect to='login' />
+                console.log("role: "+account.role);
+                if(account.role === '1')
+                {
+                    history.push('index');
+                    <Redirect to='login' />
+                }
+                else{
+                    history.push('./dashboard/dashboard');
+                }
             }
             else {
                 enqueueSnackbar("Đăng nhập thất bại!", { variant: "error" });
