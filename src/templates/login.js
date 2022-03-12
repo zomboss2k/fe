@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router';
-import { Redirect } from 'react-router-dom';
+import { Redirect,Link } from 'react-router-dom';
 import "./login.css"
 
 
@@ -104,7 +104,7 @@ function Login() {
                                             </div>
                                         </div>
                                     </form>
-                                    <p class="text-center">Not a member? <a data-toggle="tab" href="#signup">Sign Up</a></p>
+                                    <p class="text-center">Not a member? <a data-toggle="tab"><Link to={{pathname: "/resigter"}}>Sign Up</Link></a></p>
                                 </div>
                             </div>
                         </div>

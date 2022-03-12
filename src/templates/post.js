@@ -4,21 +4,45 @@ import axios  from 'axios';
 import {useSnackbar} from 'notistack';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
 import { Spinner,Button, FormControl, Dropdown, Form,Alert } from 'react-bootstrap';
 import { FaCommentAlt,FaElementor,FaWaze,FaHouseDamage,FaUserSlash } from "react-icons/fa";
+
 
 const submitloginAPI= (data) => {
     const url = "http://127.0.0.1:5000/api/addpost"
     return axios.post(url,data)
 }
+const type = [
+            {
+                value: 'thue',
+                label: 'Cho Thuê',
+            },
+            {
+                value: 'tim',
+                label: 'Tìm Phòng',
+            },
+            {
+                value: 'ghep',
+                label: 'Ở Ghép',
+            },
+            {
+                value: 'homestay',
+                label: 'Căn Hộ',
+            },
+            {
+                value: 'other',     
+                label: 'Khác',
+            },
+            ];
 function AddPost(){
-     let name = "";
+    let name = "";
     const token = localStorage.getItem("token");
     console.log("token: " + token);
     const usr = token.split("=")[1];
     const history = useHistory();
     const {enqueueSnackbar} = useSnackbar();
-    const [info, setInfo] = useState({title: '', tpye: '',detail:'',username:usr})
+    const [info, setInfo] = useState({title: '', tpye: '',dientich:'',diachi:'',detail:'',cost:'',username:usr})
     let islogin = false;
     if(token != null){
         islogin = true;
@@ -26,8 +50,9 @@ function AddPost(){
         name = token.split('=')[1];
     }
     useEffect(() => {
-        document.title = "Add Post-Abc Forum"
+        document.title = "Add Post"
     }, []);
+    ///
     const onValueChangeTitle= (event) => {
         setInfo(prev =>({...prev, title:event.target.value}));
     }
@@ -37,6 +62,15 @@ function AddPost(){
     const getValueType = (event) =>{
         setInfo(prev =>({...prev,type:event.target.value}));
     }
+    const onValueChangeDientich= (event) => {
+        setInfo(prev =>({...prev, dientich:event.target.value}));
+    }
+    const onValueChangeDiachi= (event) => {
+        setInfo(prev =>({...prev, diachi:event.target.value}));
+    }
+    const onValueChangeCost= (event) => {
+        setInfo(prev =>({...prev, cost:event.target.value}));
+    }
     console.log("type: "+info.type);
     console.log("detail:"+info.detail);
     console.log("username:"+info.username);
@@ -44,8 +78,11 @@ function AddPost(){
         const data = new FormData();
         data.append("title",info.title);
         data.append("type",info.type);
+        data.append("dientich",info.dientich);
+        data.append("diachi", info.diachi);
         data.append("detail",info.detail);
         data.append("username",info.username);
+        data.append("cost",info.cost);
         try{
             const rs = await submitloginAPI(data);
             console.log(JSON.stringify(rs))
@@ -61,6 +98,7 @@ function AddPost(){
             console.log("error: " + e);
             enqueueSnackbar("Vui Lòng Thử Lại ",{variant:'error'});
         }
+        
     }
     return (
         
@@ -72,11 +110,10 @@ function AddPost(){
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                     <Dropdown.Item href="showbyid/1">Cho Thuê</Dropdown.Item>
-                    <Dropdown.Item href="showbyid/2">Cần Thuê</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/2">Tìm Phòng</Dropdown.Item>
                     <Dropdown.Item href="showbyid/3">Ở Ghép</Dropdown.Item>
-                    <Dropdown.Item href="showbyid/4">Mua Bán, Trao đổi</Dropdown.Item>
-                    <Dropdown.Item href="showbyid/5">Căn Hộ</Dropdown.Item>
-                    <Dropdown.Item href="showbyid/6">Other</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/4">Căn Hộ</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/5">Other</Dropdown.Item>
                     </Dropdown.Menu>
                     </Dropdown>
                     <Link class="navbar-brand" to={{pathname: "/"}} style={{width:'10px'}}>
@@ -103,14 +140,12 @@ function AddPost(){
                 </ul>
             </nav>
             </div>
-            <h1 style={{'margin':'30px 200px',color:'chocolate'}}>THEM BAI DANG</h1>
-            <div class="form-group" style={{margin:'50px 80px',padding:'10px'}}>
-                <label for="inputtitle" class="col-sm-2 control-label">Title:</label>
-                <div class="col-sm-10">
-                    <input type="text" name="title" id="inputtitle" onChange={onValueChangeTitle} class="form-control" required="required" />
-                </div>
+            <h1 style={{'margin':'30px 200px',color:'chocolate'}}>TẢI LÊN BÀI VIẾT CỦA BẠN</h1>
+            <div class="tieude">
+                <TextField id="standard-basic" name = "title" label="Tiêu đề" onChange={onValueChangeTitle} variant="standard" />
             </div>
-            <div class="form-group"style={{margin:'10px 80px',padding:'10px'}}>
+            <br/>
+            {/* <div class="form-group"style={{margin:'10px 80px',padding:'10px'}}>
                 <label for="inputtitle" class="col-sm-2 control-label">Type:</label>
                 <Form.Group style={{width:'300px','margin-left':'20px'}}>
                 <Form.Control as="select" onChange={getValueType} id='type' defaultValue='Other'>
@@ -121,14 +156,43 @@ function AddPost(){
                     <option value='Free Lance'>Căn Hộ</option>
                     <option value='Other'>Other</option>
                 </Form.Control></Form.Group>
+            </div> */}
+            <div>
+             <TextField
+                id="outlined-select-currency-native"
+                select
+                label="Loại Bài Đăng"
+                value={info.type}
+                onChange={getValueType}
+                SelectProps={{
+                    native: true,
+                }}
+                helperText="Vui lòng chọn nhu cầu của bạn"
+                >
+                {type.map((option) => (
+                    <option key={option.value} value={option.value}>
+                    {option.label}
+                    </option>
+                ))}
+            </TextField>
             </div>
-            <div class="form-group"style={{margin:'50px 80px',padding:'10px'}}>
-                <label for="textareadetail" class="col-sm-2 control-label">Detail:</label>
-                <div class="col-sm-10">
-                    <textarea name="detail" id="textareadetail" onChange={onValueChangeDetail}  class="form-control" rows="3" required="required"></textarea>
-                </div>
-            </div><br/>
-            <button type="button" class="btn btn-success" id='add' onClick={onAdd}style={{"margin":'10px 270px','margin-bottom':'30px'}}>ADD</button>
+            <div className="dientich">
+                <TextField id="standard-basic" name = "title" label="Diện Tích" onChange={onValueChangeDientich} variant="standard" />
+                    <br/>
+            </div>
+            <div className="diachi">
+                <TextField id="standard-basic" name = "diachi" label="Địa Chỉ" onChange={onValueChangeDiachi} variant="standard" />
+                    <br/>
+            </div>
+            <div className="detail">
+                <TextField id="standard-basic" name = "detail" label="Chi Tiết" onChange={onValueChangeDetail} variant="standard" />
+                    <br/>
+            </div>
+            <div className="cost">
+                <TextField id="standard-basic" name = "cost" label="Giá Thuê" onChange={onValueChangeCost} variant="standard" />
+                    <br/>
+            </div>
+            <button type="button" class="btn btn-success" id='add' onClick={onAdd}style={{"margin":'10px 270px','margin-bottom':'30px'}}>Thêm</button>
         </div>
     );
 }

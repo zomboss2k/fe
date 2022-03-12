@@ -13,13 +13,18 @@ function Resigter() {
 
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
-    const [info, setInfo] = useState({ username: '', password: '', repassword: '', email: '', facebook: '' })
-    const onValueChangeUsername = (event) => {
-        setInfo(prev => ({ ...prev, username: event.target.value }));
-    }
+    const [info, setInfo] = useState({ name:'',username: '', password: '', repassword: '', email: '', phone: '' })
+    //title
     useEffect(() => {
         document.title = "Resigter-Abc Forum"
     }, []);
+    // -----------------------value change----------------------
+    const onValueChangeName = (event) => {
+        setInfo(prev => ({ ...prev, name: event.target.value }));
+    }
+    const onValueChangeUsername = (event) => {
+        setInfo(prev => ({ ...prev, username: event.target.value }));
+    }
     const onValueChangePassword = (event) => {
         setInfo(prev => ({ ...prev, password: event.target.value }));
     }
@@ -29,12 +34,17 @@ function Resigter() {
     const onValueChangeEmail = (event) => {
         setInfo(prev => ({ ...prev, email: event.target.value }));
     }
+    const onValueChangePhone = (event) => {
+        setInfo(prev => ({ ...prev, phone: event.target.value }));
+    }
     const onCreate = async () => {
         const data = new FormData();
+        data.append("name",info.name);
         data.append("username", info.username);
         data.append("password", info.password);
         data.append("repassword", info.repassword);
         data.append("email", info.email);
+        data.append("phone", info.phone);
         try {
             const rs = await submitloginAPI(data);
             console.log(JSON.stringify(rs))
@@ -58,7 +68,7 @@ function Resigter() {
                 <label for="inputName" class="col-sm-4 control-label">Họ và tên:</label>
                 <div class="col-sm-10" style={{ width: '100px', height: '50px' }}>
                     <input type="text" name="name" id="inputName" class="form-control"
-                        onChange={onValueChangeUsername}
+                        onChange={onValueChangeName}
                         required="required" pattern="" title="" style={{ width: '300px', }} />
                 </div>
                 <label for="inputUsername" class="col-sm-4 control-label">Tên đăng nhập:</label>
@@ -76,7 +86,7 @@ function Resigter() {
                 <label for="inputPhoneNumber" class="col-sm-4 control-label">Số điên thoại:</label>
                 <div class="col-sm-10" style={{ width: '100px', height: '50px' }}>
                     <input type="text" name="phoneNumber" id="inputPhoneNumber" class="form-control"
-                        onChange={onValueChangeUsername}
+                        onChange={onValueChangePhone}
                         required="required" pattern="" title="" style={{ width: '300px', }} />
                 </div>
                 <label for="inputpassword" class="col-sm-4 control-label">Mật khẩu:</label>
