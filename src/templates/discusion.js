@@ -145,12 +145,11 @@ function Discusion() {
                     <Dropdown.Toggle variant="success" id="dropdown-basic"> <FaElementor />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                   <Dropdown.Item href="showbyid/1">Cho Thuê</Dropdown.Item>
-                    <Dropdown.Item href="showbyid/2">Cần Thuê</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/1">Cho Thuê</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/2">Tìm Phòng</Dropdown.Item>
                     <Dropdown.Item href="showbyid/3">Ở Ghép</Dropdown.Item>
-                    <Dropdown.Item href="showbyid/4">Mua Bán, Trao đổi</Dropdown.Item>
-                    <Dropdown.Item href="showbyid/5">Căn Hộ</Dropdown.Item>
-                    <Dropdown.Item href="showbyid/6">Other</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/4">Căn Hộ</Dropdown.Item>
+                    <Dropdown.Item href="showbyid/5">Other</Dropdown.Item>
                     </Dropdown.Menu>
                     </Dropdown>
                     <Link class="navbar-brand" to={{pathname: "/"}} style={{width:'10px'}}>
