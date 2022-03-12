@@ -118,7 +118,12 @@ function Index() {
             <div className="content" style={{'padding':'10px 0px'}}>
                 {postt.map((row) =>(
                     <Card>
-                        <Card.Header>{row.type}</Card.Header>
+                        <Card.Header>{row.type}
+                        <div className="onCRUD" style={{float:'right','margin-right':'100px'}}>
+                            <Button variant="warning" onClick={() => _onEdit(row.post_ID)} style={{'margin-right':'30px'}}><FiEdit /></Button>
+                            <Button variant="danger" onClick={() => _onDelete(row.post_ID)}><FaRegTrashAlt/></Button>
+                        </div>
+                        </Card.Header>
                         <div className="row">
                             <div style={{'padding-left':'20px'}} >
                                 <Button variant="link" id='cmt'onClick={() => _onDiscusion(row.post_ID)}>
@@ -131,10 +136,7 @@ function Index() {
                                 <Card.Body>
                                         <Card.Title>{row.title}</Card.Title>
                                     {name === row.username
-                                        ?<div className="onCRUD" style={{float:'right','margin-right':'100px'}}>
-                                            <Button variant="warning" onClick={() => _onEdit(row.post_ID)} style={{'margin-right':'30px'}}><FiEdit /></Button>
-                                            <Button variant="danger" onClick={() => _onDelete(row.post_ID)}><FaRegTrashAlt/></Button>
-                                        </div>
+                                        ?<i style={{'color':'green','font-weight':'italic','font-size':'15px'}}>Giá thuê: {row.cost}</i>
                                         :<i style={{'color':'green','font-weight':'italic','font-size':'15px'}}>Người đăng : {row.username}</i>
                                         }
                                     <Card.Text>{row.detail}</Card.Text>
@@ -142,6 +144,7 @@ function Index() {
                                     
                                        
                                 </Card.Body>
+                                
                             </div>
                         </div>
                     </Card>
