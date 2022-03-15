@@ -1,3 +1,4 @@
+import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Index from './templates/index';
 import Login from './templates/login';
@@ -10,6 +11,10 @@ import { SnackbarProvider } from 'notistack';
 import ShowType from './templates/showtype';
 import Search from './templates/search';
 import Chat from './templates/chat';
+import Headers from './templates/Headers';
+import Footer from './templates/Footer';
+
+
 function App() {
   return (
     <SnackbarProvider>
@@ -25,6 +30,7 @@ function App() {
             <Sigout />
           </Route>
           <Route path="/addpost">
+            <Headers />
             <Addpost />
           </Route>
           <Route path="/chat">
@@ -39,7 +45,9 @@ function App() {
           <Route path="/edit/:id" children={<Edit />}>
           </Route>
           <Route path="/">
+            <Headers />
             <Index />
+            <Footer />
           </Route>
         </Switch>
       </Router>
