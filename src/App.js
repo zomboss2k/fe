@@ -11,14 +11,11 @@ import { SnackbarProvider } from 'notistack';
 import ShowType from './templates/showtype';
 import Search from './templates/search';
 import Chat from './templates/chat';
-<<<<<<< HEAD
 import Headers from './templates/Headers';
 import Footer from './templates/Footer';
 
 
-=======
 import Test from './templates/Test';
->>>>>>> 6b146a61704146486fea3715d2670030ab3bd1ae
 function App() {
   return (
     <SnackbarProvider>
