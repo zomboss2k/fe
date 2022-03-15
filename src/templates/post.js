@@ -38,12 +38,13 @@ const type = [
 ];
 function AddPost() {
     let name = "";
+    let ids = Math.round((new Date()).getTime() / 1000);
     const token = localStorage.getItem("token");
     console.log("token: " + token);
     const usr = token.split("=")[1];
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
-    const [info, setInfo] = useState({ title: '', tpye: '', dientich: '', diachi: '', detail: '', cost: '', username: usr })
+    const [info, setInfo] = useState({ids: ids, title: '', tpye: '', dientich: '', diachi: '', detail: '', cost: '', username: usr })
     let islogin = false;
     if (token != null) {
         islogin = true;
@@ -75,8 +76,21 @@ function AddPost() {
     console.log("type: " + info.type);
     console.log("detail:" + info.detail);
     console.log("username:" + info.username);
+    const [selectedImages, setSelectedImages] = useState([]);
+    const onSelectFile = (event) => {
+        const selectedFiles = event.target.files;
+        const selectedFilesArray = Array.from(selectedFiles);
+
+        const imagesArray = selectedFilesArray.map((file) => {
+            return file
+        });
+
+        setSelectedImages((previousImages) => previousImages.concat(imagesArray));
+    };
+    console.log("Image new:",selectedImages);
     const onAdd = async () => {
         const data = new FormData();
+        data.append("ids",info.ids);
         data.append("title", info.title);
         data.append("type", info.type);
         data.append("dientich", info.dientich);
@@ -84,6 +98,7 @@ function AddPost() {
         data.append("detail", info.detail);
         data.append("username", info.username);
         data.append("cost", info.cost);
+        data.append("files",selectedImages);
         try {
             const rs = await submitloginAPI(data);
             console.log(JSON.stringify(rs))
@@ -95,26 +110,35 @@ function AddPost() {
                 console.log(rs.data)
                 enqueueSnackbar("Vui Lòng Thử Lại !", { variant: "error" });
             }
+            //files
+            let fileToUpload = selectedImages
+            fileToUpload.map((file) => {
+                const formData = new FormData()
+                formData.append('files', file);
+                formData.append('ids', info.ids);
+                console.log("file",selectedImages);
+                return axios
+                .post('http://127.0.0.1:5000/api/addimage', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                })
+                .then(res => {
+                    console.log(res)
+                    return res
+                });
+            })
+            
+
         } catch (e) {
             console.log("error: " + e);
             enqueueSnackbar("Vui Lòng Thử Lại ", { variant: 'error' });
         }
-
+        
     }
 
     // post images
-    const [selectedImages, setSelectedImages] = useState([]);
-    const onSelectFile = (event) => {
-        const selectedFiles = event.target.files;
-        const selectedFilesArray = Array.from(selectedFiles);
-
-        const imagesArray = selectedFilesArray.map((file) => {
-            return URL.createObjectURL(file);
-        });
-
-        setSelectedImages((previousImages) => previousImages.concat(imagesArray));
-    };
-
+    
     return (
 
         <div class="container" style={{ width: '100%'}}>

@@ -8,7 +8,6 @@ import axios  from 'axios';
 import Images from './images'
 import { FaTrash,FaElementor,FaWaze,FaHouseDamage,FaUserSlash,FaRegHandPointRight,FaThumbsUp } from "react-icons/fa";
 import "./style.css";
-import "../App.css";
 
 const discusionAPI = (id) => {
   return getAPI("/selectpost/"+id);
@@ -29,6 +28,12 @@ const reportComment = (id) => {
 const like = (id) => {
     return getAPI('/like/'+id)
 }
+const getidimage=(id)=>{
+    return getAPI('/getidimage/'+id)
+}
+const getimage = (id) => {
+    return getAPI('/getimage/'+id)
+}
 function Discusion() {
     let {id} = useParams();
     const history = useHistory();
@@ -45,6 +50,9 @@ function Discusion() {
         console.log("token: "+token);
         name = token.split('=')[1];
     }
+    const[ids,setids] = useState([]);
+    const[files,setfiles] = useState([]);
+    
     const onValueSChange = (event) =>{
         setSearchValue(prev =>({...prev, value:event.target.value}));
         console.log("your comment "+searchValue.value)
@@ -122,6 +130,18 @@ function Discusion() {
         }
     };
     requestData();
+        const requestid = async (props) => {
+            try{
+                const rs = await getidimage(id);
+                if (rs.status === 200) {
+                    setids(rs.data);
+                    console.log('ids: ', rs.data);
+                }
+            }catch (e) {
+                console.log("error: ",e);
+            }
+        };
+        requestid();
         const requestcmt = async (props) => {
             try{
                 const rs = await showbyID(id);
