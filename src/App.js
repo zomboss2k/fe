@@ -12,19 +12,27 @@ import ShowType from './templates/showtype';
 import Search from './templates/search';
 import Chat from './templates/chat';
 import Headers from './templates/Headers';
+
 import Footer from './templates/Footer';
 
 
 import Test from './templates/Test';
+<<<<<<< HEAD
+
+=======
+>>>>>>> 7c1c09b5df2ef982e6ef516c5a1bef8c3c68e507
 function App() {
   return (
     <SnackbarProvider>
       <Router>
         <Switch>
+
           <Route path="/login">
+            <Headers />
             <Login />
           </Route>
           <Route path="/resigter">
+            <Headers />
             <Resigter />
           </Route>
           <Route path="/sigout">
@@ -42,8 +50,8 @@ function App() {
           </Route>
           <Route path="/search/:value" children={<Search />}>
           </Route>
-          <Route path="/discusion/:id" children={<Discusion />}>
-          </Route>
+          
+          <Route path="/discusion/:id" children={<Discusion />} />
           <Route path="/showbyid/:id" children={<ShowType />}>
           </Route>
           <Route path="/edit/:id" children={<Edit />}>

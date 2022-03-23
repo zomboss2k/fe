@@ -44,7 +44,7 @@ function AddPost() {
     const usr = token.split("=")[1];
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
-    const [info, setInfo] = useState({ids: ids, title: '', tpye: '', dientich: '', diachi: '', detail: '', cost: '', username: usr })
+    const [info, setInfo] = useState({ ids: ids, title: '', tpye: '', dientich: '', diachi: '', detail: '', cost: '', username: usr })
     let islogin = false;
     if (token != null) {
         islogin = true;
@@ -76,21 +76,38 @@ function AddPost() {
     console.log("type: " + info.type);
     console.log("detail:" + info.detail);
     console.log("username:" + info.username);
+
+
+    // const [selectedImages, setSelectedImages] = useState([]);
+    // const onSelectFile = (event) => {
+    //     const selectedFiles = event.target.files;
+    //     const selectedFilesArray = Array.from(selectedFiles);
+
+    //     const imagesArray = selectedFilesArray.map((file) => {
+    //         return file
+    //     });
+
+    //     setSelectedImages((previousImages) => previousImages.concat(imagesArray));
+    // };
+
     const [selectedImages, setSelectedImages] = useState([]);
     const onSelectFile = (event) => {
         const selectedFiles = event.target.files;
         const selectedFilesArray = Array.from(selectedFiles);
 
         const imagesArray = selectedFilesArray.map((file) => {
-            return file
+            return URL.createObjectURL(file);
         });
 
         setSelectedImages((previousImages) => previousImages.concat(imagesArray));
     };
-    console.log("Image new:",selectedImages);
+
+
+
+    console.log("Image new:", selectedImages);
     const onAdd = async () => {
         const data = new FormData();
-        data.append("ids",info.ids);
+        data.append("ids", info.ids);
         data.append("title", info.title);
         data.append("type", info.type);
         data.append("dientich", info.dientich);
@@ -98,7 +115,7 @@ function AddPost() {
         data.append("detail", info.detail);
         data.append("username", info.username);
         data.append("cost", info.cost);
-        data.append("files",selectedImages);
+        data.append("files", selectedImages);
         try {
             const rs = await submitloginAPI(data);
             console.log(JSON.stringify(rs))
@@ -116,52 +133,41 @@ function AddPost() {
                 const formData = new FormData()
                 formData.append('files', file);
                 formData.append('ids', info.ids);
-                console.log("file",selectedImages);
+                console.log("file", selectedImages);
                 return axios
-                .post('http://127.0.0.1:5000/api/addimage', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                })
-                .then(res => {
-                    console.log(res)
-                    return res
-                });
+                    .post('http://127.0.0.1:5000/api/addimage', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    })
+                    .then(res => {
+                        console.log(res)
+                        return res
+                    });
             })
-            
+
 
         } catch (e) {
             console.log("error: " + e);
             enqueueSnackbar("Vui Lòng Thử Lại ", { variant: 'error' });
         }
-        
+
     }
 
     // post images
-    
+
+
     return (
 
-        <div class="container" style={{ width: '100%', 'margin-top': '170px'}}>
-            
-            <h1 style={{ 'margin': '30px 0', color: 'chocolate' }}>Tải lên bài viết của bạn</h1>
+        <div class="container" style={{ width: '100%', 'margin-top': '170px' }}>
+
+            <h1 style={{'text-align': 'center', 'margin': '30px 0', color: 'chocolate' }}>Tải lên bài viết của bạn</h1>
             <div className="row">
                 <div className="col">
                     <div class="col">
                         <TextField style={{ width: '100%' }} id="standard-basic" name="title" label="Tiêu đề" onChange={onValueChangeTitle} variant="standard" />
                     </div>
                     <br />
-                    {/* <div class="form-group"style={{margin:'10px 80px',padding:'10px'}}>
-                <label for="inputtitle" class="col-sm-2 control-label">Type:</label>
-                <Form.Group style={{width:'300px','margin-left':'20px'}}>
-                <Form.Control as="select" onChange={getValueType} id='type' defaultValue='Other'>
-                    <option value='IT'>Cho Thuê</option>
-                    <option value='Learning'>Cần Thuê</option>
-                    <option value='Working'>Ở Ghép</option>
-                    <option value='Photography'>Mua Bán, Trao đổi</option>
-                    <option value='Free Lance'>Căn Hộ</option>
-                    <option value='Other'>Other</option>
-                </Form.Control></Form.Group>
-            </div> */}
                     <div class="col mt-4">
                         <TextField style={{ width: '100%' }}
                             id="outlined-select-currency-native"
@@ -173,6 +179,7 @@ function AddPost() {
                                 native: true,
                             }}
                             helperText="Vui lòng chọn nhu cầu của bạn"
+                            required="required"
                         >
                             {type.map((option) => (
                                 <option key={option.value} value={option.value}>
@@ -203,7 +210,7 @@ function AddPost() {
                         <label className="labelImgs">
                             + Thêm Ảnh
                             <br />
-                            <span>up to 10 images</span>
+                            <span>Tối đa 10 ảnh</span>
                             <input
                                 type="file"
                                 name="images"
@@ -217,9 +224,9 @@ function AddPost() {
                         {selectedImages.length > 0 &&
                             (selectedImages.length > 10 ? (
                                 <p className="error">
-                                    You can't upload more than 10 images! <br />
+                                    Bạn k thể tải lên nhiều hơn 10 ảnh! <br />
                                     <span>
-                                        please delete <b> {selectedImages.length - 10} </b> of them{" "}
+                                        Xin hãy xóa <b> {selectedImages.length - 10} </b> of them{" "}
                                     </span>
                                 </p>
                             ) : (
@@ -228,7 +235,7 @@ function AddPost() {
                                     className="upload-btn"
                                     onClick={onAdd}
                                 >
-                                    UPLOAD {selectedImages.length} IMAGE
+                                    Tải lên {selectedImages.length} Hình ảnh
                                     {selectedImages.length === 1 ? "" : "S"}
                                 </button>
                             ))}
@@ -245,7 +252,7 @@ function AddPost() {
                                                     setSelectedImages(selectedImages.filter((e) => e !== image))
                                                 }
                                             >
-                                                delete image
+                                                Xóa ảnh
                                             </button>
                                             <p>{index + 1}</p>
                                         </div>
@@ -253,9 +260,10 @@ function AddPost() {
                                 })}
                         </div>
                     </section>
+
+
                 </div>
             </div>
-            {/* <button type="button" class="btn btn-success" id='add' onClick={onAdd} style={{ "margin": '10px 270px', 'margin-bottom': '30px' }}>Thêm</button> */}
         </div>
     );
 }

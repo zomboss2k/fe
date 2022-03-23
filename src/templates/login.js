@@ -104,7 +104,7 @@ function Login() {
                                             </div>
                                         </div>
                                     </form>
-                                    <p class="text-center">Not a member? <a data-toggle="tab"><Link to={{pathname: "/resigter"}}>Sign Up</Link></a></p>
+                                    <p class="text-center">Bạn chưa có tài khoản? <a data-toggle="tab"><Link to={{pathname: "/resigter"}}>Đăng kí</Link></a></p>
                                 </div>
                             </div>
                         </div>
