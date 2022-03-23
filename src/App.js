@@ -16,7 +16,10 @@ import Headers from './templates/Headers';
 import Footer from './templates/Footer';
 
 
+<<<<<<< HEAD
 import Test from './templates/Test';
+=======
+>>>>>>> bd166f3d2c329adac6c3a8da5a8a843070df5904
 
 function App() {
   return (
@@ -41,9 +44,6 @@ function App() {
           </Route>
           <Route path="/chat">
             <Chat />
-          </Route>
-          <Route path="/test">
-            <Test/>
           </Route>
           <Route path="/search/:value" children={<Search />}>
           </Route>
