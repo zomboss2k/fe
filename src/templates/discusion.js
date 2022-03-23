@@ -8,12 +8,7 @@ import axios from 'axios';
 import Images from './images'
 import { FaTrash, FaElementor, FaWaze, FaHouseDamage, FaUserSlash, FaRegHandPointRight, FaThumbsUp } from "react-icons/fa";
 import "./main_styles.css"
-<<<<<<< HEAD
-import "./style.css"
-
-=======
 import "./style.css";
->>>>>>> 7c1c09b5df2ef982e6ef516c5a1bef8c3c68e507
 
 const discusionAPI = (id) => {
     return getAPI("/selectpost/" + id);
@@ -34,6 +29,12 @@ const reportComment = (id) => {
 const like = (id) => {
     return getAPI('/like/' + id)
 }
+const getidimage = (id) => {
+    return getAPI('/getidimage/' + id)
+}
+const getimage = (id) => {
+    return getAPI('/getimage/' + id)
+}
 function Discusion() {
     let { id } = useParams();
     const history = useHistory();
@@ -50,18 +51,12 @@ function Discusion() {
         console.log("token: " + token);
         name = token.split('=')[1];
     }
-<<<<<<< HEAD
+    const [ids, setids] = useState([]);
+    const [files, setfiles] = useState([]);
+
     const onValueSChange = (event) => {
         setSearchValue(prev => ({ ...prev, value: event.target.value }));
         console.log("your comment " + searchValue.value)
-=======
-    const[ids,setids] = useState([]);
-    const[files,setfiles] = useState([]);
-    
-    const onValueSChange = (event) =>{
-        setSearchValue(prev =>({...prev, value:event.target.value}));
-        console.log("your comment "+searchValue.value)
->>>>>>> 7c1c09b5df2ef982e6ef516c5a1bef8c3c68e507
     }
     const _onSearch = (value) => {
         console.log(value);
@@ -134,26 +129,21 @@ function Discusion() {
             } catch (e) {
                 console.log("error: ", e);
             }
-<<<<<<< HEAD
+
         };
         requestData();
-=======
-    
-    };
-    requestData();
         const requestid = async (props) => {
-            try{
+            try {
                 const rs = await getidimage(id);
                 if (rs.status === 200) {
                     setids(rs.data);
                     console.log('ids: ', rs.data);
                 }
-            }catch (e) {
-                console.log("error: ",e);
+            } catch (e) {
+                console.log("error: ", e);
             }
         };
         requestid();
->>>>>>> 7c1c09b5df2ef982e6ef516c5a1bef8c3c68e507
         const requestcmt = async (props) => {
             try {
                 const rs = await showbyID(id);
@@ -348,6 +338,112 @@ function Discusion() {
                     </div>
                 </div>
             </div>
+
+            {/* Tabs */}
+            <div className="tabs_section_container">
+                <div className="container">
+                    <div className="row">
+                        <div className="col">
+                            <div className="tabs_container">
+                                <ul className="tabs d-flex flex-sm-row flex-column align-items-left align-items-md-center justify-content-center">
+                                    <li className="tab" data-active-tab="tab_3"><span>Reviews (2)</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-lg-6 reviews_col">
+                            <div className="tab_title reviews_title">
+                                <h4>Reviews (2)</h4>
+                            </div>
+                            {/* User Review */}
+                            <div className="user_review_container d-flex flex-column flex-sm-row">
+                                
+                                <div className="review">
+                                    <div className="review_date">27 Aug 2016</div>
+                                    <div className="user_name">Brandon William</div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        {/* Add Review */}
+                        <div className="col-lg-6 add_review_col">
+                            <div className="add_review">
+                                <form id="review_form" action="post">
+                                    <div>
+                                        <h1>Add Review</h1>
+
+                                    </div>
+                                    <div>
+
+                                        <textarea id="review_message" className="input_review" name="message" placeholder="Your Review" rows={4} required data-error="Please, leave us a review." defaultValue={""} />
+                                    </div>
+                                    <div className="text-left text-sm-right">
+                                        <button id="review_submit" type="submit" className="red_button review_submit_btn trans_300" value="Submit">submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="newsletter">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-6">
+                            <div className="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
+                                <h4>Newsletter</h4>
+                                <p>Subscribe to our newsletter and get 20% off your first purchase</p>
+                            </div>
+                        </div>
+                        <div className="col-lg-6">
+                            <form action="post">
+                                <div className="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
+                                    <input id="newsletter_email" type="email" placeholder="Your email" required="required" data-error="Valid email is required." />
+                                    <button id="newsletter_submit" type="submit" className="newsletter_submit_btn trans_300" value="Submit">subscribe</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* Footer */}
+            <footer className="footer">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-6">
+                            <div className="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
+                                <ul className="footer_nav">
+                                    <li><a href="#">Blog</a></li>
+                                    <li><a href="#">FAQs</a></li>
+                                    <li><a href="contact.html">Contact us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="col-lg-6">
+                            <div className="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
+                                <ul>
+                                    <li><a href="#"><i className="fa fa-facebook" aria-hidden="true" /></a></li>
+                                    <li><a href="#"><i className="fa fa-twitter" aria-hidden="true" /></a></li>
+                                    <li><a href="#"><i className="fa fa-instagram" aria-hidden="true" /></a></li>
+                                    <li><a href="#"><i className="fa fa-skype" aria-hidden="true" /></a></li>
+                                    <li><a href="#"><i className="fa fa-pinterest" aria-hidden="true" /></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <div className="footer_nav_container">
+                                <div className="cr">©2018 All Rights Reserverd. This template is made with <i className="fa fa-heart-o" aria-hidden="true" /> by <a href="#">Colorlib</a> &amp; distributed by <a href="https://themewagon.com">ThemeWagon</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+
         </div>
 
     );

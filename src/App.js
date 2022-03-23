@@ -17,10 +17,7 @@ import Footer from './templates/Footer';
 
 
 import Test from './templates/Test';
-<<<<<<< HEAD
 
-=======
->>>>>>> 7c1c09b5df2ef982e6ef516c5a1bef8c3c68e507
 function App() {
   return (
     <SnackbarProvider>
