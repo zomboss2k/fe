@@ -63,7 +63,7 @@ function Resigter() {
         }
     }
     return (
-        <section class="h-100 bg-dark">
+        <section style={{ "margin-top": "5rem" }} class="h-100 bg-dark">
             <div class="container py-5 h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col">

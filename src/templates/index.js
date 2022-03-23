@@ -33,9 +33,6 @@ function Index() {
         name = token.split('=')[1];
     }
     useEffect(() => {
-        document.title = "Abc Forum"
-    }, []);
-    useEffect(() => {
         const requestData = async () => {
             try {
                 const result = await getPostAPI();
@@ -68,14 +65,6 @@ function Index() {
     const _onEdit = (id) => {
         history.push('edit/' + id);
     }
-    const onValueChange = (event) => {
-        setSearchValue(prev => ({ ...prev, value: event.target.value }));
-        console.log("your comment " + searchValue.value)
-    }
-    const _onSearch = (value) => {
-        console.log(value);
-        history.push('/search/' + value)
-    }
     return (
 
         <div className="MainDiv">
@@ -84,9 +73,7 @@ function Index() {
                     <div class="row align-items-center fill_height">
                         <div class="col">
                             <div class="main_slider_content">
-                                <h6>Spring / Summer Collection 2021</h6>
-                                <h1>Get up to 30% Off New Arrivals</h1>
-                                <div class="red_button shop_now_button"><a href="#">shop now</a></div>
+                                <h1>Phòng trọ Đà Nẵng</h1>
                             </div>
                         </div>
                     </div>
@@ -99,21 +86,21 @@ function Index() {
                         <div class="col-md-4">
                             <div class="banner_item align-items-center" style={{ backgroundImage: "url(assets/images/banner_1.jpg)" }}>
                                 <div class="banner_category">
-                                    <a href="#">women's</a>
+                                    <a href="/showbyid/1">Phòng trọ</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="banner_item align-items-center" style={{ backgroundImage: "url(assets/images/banner_2.jpg)" }}>
                                 <div class="banner_category">
-                                    <a href="#">accessories's</a>
+                                    <a href="showbyid/4">Căn hộ</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="banner_item align-items-center" style={{ backgroundImage: "url(assets/images/banner_3.jpg)" }}>
                                 <div class="banner_category">
-                                    <a href="#">men's</a>
+                                    <a href="showbyid/3">Ở ghép</a>
                                 </div>
                             </div>
                         </div>

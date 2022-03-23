@@ -499,8 +499,6 @@ section
 }
 .account_selection li
 {
-	padding-left: 10px;
-	padding-right: 10px;
 	line-height: 50px;
 }
 .account_selection li a
@@ -883,7 +881,7 @@ section
 }
 .product_details_title p
 {
-	color: #;
+	color: #ccc;
 }
 
 /*********************************

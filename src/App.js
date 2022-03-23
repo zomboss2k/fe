@@ -11,23 +11,25 @@ import { SnackbarProvider } from 'notistack';
 import ShowType from './templates/showtype';
 import Search from './templates/search';
 import Chat from './templates/chat';
-<<<<<<< HEAD
 import Headers from './templates/Headers';
+
 import Footer from './templates/Footer';
 
 
-=======
 import Test from './templates/Test';
->>>>>>> 6b146a61704146486fea3715d2670030ab3bd1ae
+
 function App() {
   return (
     <SnackbarProvider>
       <Router>
         <Switch>
+
           <Route path="/login">
+            <Headers />
             <Login />
           </Route>
           <Route path="/resigter">
+            <Headers />
             <Resigter />
           </Route>
           <Route path="/sigout">
@@ -45,8 +47,8 @@ function App() {
           </Route>
           <Route path="/search/:value" children={<Search />}>
           </Route>
-          <Route path="/discusion/:id" children={<Discusion />}>
-          </Route>
+          
+          <Route path="/discusion/:id" children={<Discusion />} />
           <Route path="/showbyid/:id" children={<ShowType />}>
           </Route>
           <Route path="/edit/:id" children={<Edit />}>

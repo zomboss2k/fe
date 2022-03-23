@@ -33,9 +33,6 @@ function Headers() {
         name = token.split('=')[1];
     }
     useEffect(() => {
-        document.title = "Abc Forum"
-    }, []);
-    useEffect(() => {
         const requestData = async () => {
             try {
                 const result = await getPostAPI();
@@ -90,31 +87,6 @@ function Headers() {
                         <div className="col-md-6 text-right">
                             <div className="top_nav_right">
                                 <ul className="top_nav_menu">
-                                    {/* Currency / Language / My Account */}
-                                    <li className="currency">
-                                        <a href="#">
-                                            usd
-                                            <i className="fa fa-angle-down" />
-                                        </a>
-                                        <ul className="currency_selection">
-                                            <li><a href="#">cad</a></li>
-                                            <li><a href="#">aud</a></li>
-                                            <li><a href="#">eur</a></li>
-                                            <li><a href="#">gbp</a></li>
-                                        </ul>
-                                    </li>
-                                    <li className="language">
-                                        <a href="#">
-                                            English
-                                            <i className="fa fa-angle-down" />
-                                        </a>
-                                        <ul className="language_selection">
-                                            <li><a href="#">French</a></li>
-                                            <li><a href="#">Italian</a></li>
-                                            <li><a href="#">German</a></li>
-                                            <li><a href="#">Spanish</a></li>
-                                        </ul>
-                                    </li>
                                     <li className="account">
                                         {name
                                             ? <>
@@ -155,7 +127,7 @@ function Headers() {
                     <div className="row">
                         <div className="col-lg-12 text-right">
                             <div className="logo_container">
-                                <a href="/">colo<span>shop</span></a>
+                                <a href="/">colo<span>home</span></a>
                             </div>
                             <nav className="navbar">
                                 <ul className="navbar_menu">
