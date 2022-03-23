@@ -8,12 +8,8 @@ import axios from 'axios';
 import Images from './images'
 import { FaTrash, FaElementor, FaWaze, FaHouseDamage, FaUserSlash, FaRegHandPointRight, FaThumbsUp } from "react-icons/fa";
 import "./main_styles.css"
-<<<<<<< HEAD
 import "./style.css"
 
-=======
-import "./style.css";
->>>>>>> 7c1c09b5df2ef982e6ef516c5a1bef8c3c68e507
 
 const discusionAPI = (id) => {
     return getAPI("/selectpost/" + id);
@@ -50,18 +46,9 @@ function Discusion() {
         console.log("token: " + token);
         name = token.split('=')[1];
     }
-<<<<<<< HEAD
     const onValueSChange = (event) => {
         setSearchValue(prev => ({ ...prev, value: event.target.value }));
         console.log("your comment " + searchValue.value)
-=======
-    const[ids,setids] = useState([]);
-    const[files,setfiles] = useState([]);
-    
-    const onValueSChange = (event) =>{
-        setSearchValue(prev =>({...prev, value:event.target.value}));
-        console.log("your comment "+searchValue.value)
->>>>>>> 7c1c09b5df2ef982e6ef516c5a1bef8c3c68e507
     }
     const _onSearch = (value) => {
         console.log(value);
@@ -134,26 +121,8 @@ function Discusion() {
             } catch (e) {
                 console.log("error: ", e);
             }
-<<<<<<< HEAD
         };
         requestData();
-=======
-    
-    };
-    requestData();
-        const requestid = async (props) => {
-            try{
-                const rs = await getidimage(id);
-                if (rs.status === 200) {
-                    setids(rs.data);
-                    console.log('ids: ', rs.data);
-                }
-            }catch (e) {
-                console.log("error: ",e);
-            }
-        };
-        requestid();
->>>>>>> 7c1c09b5df2ef982e6ef516c5a1bef8c3c68e507
         const requestcmt = async (props) => {
             try {
                 const rs = await showbyID(id);
