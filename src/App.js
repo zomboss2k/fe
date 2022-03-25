@@ -16,11 +16,6 @@ import Headers from './templates/Headers';
 import Footer from './templates/Footer';
 
 
-<<<<<<< HEAD
-import Test from './templates/Test';
-=======
->>>>>>> bd166f3d2c329adac6c3a8da5a8a843070df5904
-
 function App() {
   return (
     <SnackbarProvider>
@@ -45,14 +40,10 @@ function App() {
           <Route path="/chat">
             <Chat />
           </Route>
-          <Route path="/search/:value" children={<Search />}>
-          </Route>
-          
+          <Route path="/search/:value" children={<Search />} />
           <Route path="/discusion/:id" children={<Discusion />} />
-          <Route path="/showbyid/:id" children={<ShowType />}>
-          </Route>
-          <Route path="/edit/:id" children={<Edit />}>
-          </Route>
+          <Route path="/showbyid/:id" children={<ShowType />} />
+          <Route path="/edit/:id" children={<Edit />} />
           <Route path="/">
             <Headers />
             <Index />
