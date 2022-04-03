@@ -98,6 +98,9 @@ function Discusion() {
         console.log(id)
         window.location.reload(false);
     }
+    const _getimage = (id)=>{
+        return ("http://localhost:5000/api/getimage/"+id)
+    }
     const onSubmit = async () => {
         const data = new FormData();
         data.append("comment", cmt.comment);
@@ -136,8 +139,8 @@ function Discusion() {
             try{
                 const rs = await getidimage(id);
                 if (rs.status === 200) {
-                    setids(rs.data);
-                    console.log('ids: ', rs.data);
+                    setids(rs.data['id_image']);
+                    console.log('ids: ', rs.data['id_image']);
                 }
             }catch (e) {
                 console.log("error: ",e);
@@ -156,8 +159,10 @@ function Discusion() {
         };
         requestcmt();
     }, []);
-
-    const [selectedImg, setSelectedImg] = useState(Images[0]);
+    const setImage=(id)=>{
+        setSelectedImg(("http://localhost:5000/api/getimage/"+id))
+    }
+    const [selectedImg, setSelectedImg] = useState([]);
 
     return (
         // <div className="container" style={{'bgcolor':''}} >
@@ -275,8 +280,20 @@ function Discusion() {
                         <div className="breadcrumbs d-flex flex-row align-items-center">
                             <ul>
                                 <li><a href="/">Home</a></li>
-                                <li><a href="categories.html"><i className="fa fa-angle-right" aria-hidden="true" />Men's</a></li>
-                                <li className="active"><a href="#"><i className="fa fa-angle-right" aria-hidden="true" />Single Product</a></li>
+                                <li><a href="categories.html"><i className="fa fa-angle-right" aria-hidden="true" />
+                                    {
+                                        postt.map((row) =>(
+                                            row.type
+                                        ))
+                                    }
+                                </a></li>
+                                <li className="active"><a href="#"><i className="fa fa-angle-right" aria-hidden="true" />
+                                {
+                                        postt.map((row) =>(
+                                            row.title
+                                        ))
+                                    }
+                                </a></li>
                             </ul>
                         </div>
                     </div>
@@ -288,12 +305,12 @@ function Discusion() {
                                 <div className="col-lg-3 thumbnails_col order-lg-1 order-2">
                                     <div className="single_product_thumbnails">
                                         <ul>
-                                            {Images.map((img, index) => (
+                                            {ids.map((index) => (
                                                 <li><img key={index}
-                                                    src={img}
+                                                    src={_getimage(index)}
                                                     alt="dog"
-                                                    onClick={() => setSelectedImg(img)}
-                                                    data-image={img} /></li>
+                                                    onClick=""
+                                                    /></li>
                                             ))}
                                         </ul>
                                     </div>
@@ -309,14 +326,49 @@ function Discusion() {
                     <div className="col-lg-5">
                         <div className="product_details">
                             <div className="product_details_title">
-                                <h2>Pocket cotton sweatshirt</h2>
-                                <p>Nam tempus turpis at metus scelerisque placerat nulla deumantos solicitud felis. Pellentesque diam dolor, elementum etos lobortis des mollis ut...</p>
+                                <h2>
+                                {
+                                        postt.map((row) =>(
+                                            row.title
+                                        ))
+                                    }
+                                </h2>
+                                <i style={{'color':'green'}}>
+                                {
+                                        postt.map((row) =>(
+                                            row.detail
+                                        ))
+                                    }
+                                </i>
                             </div>
+                            
                             <div className="free_delivery d-flex flex-row align-items-center justify-content-center">
-                                <span className="ti-truck" /><span>free delivery</span>
+                                <span className="ti-truck" /><span>
+                                {
+                                        postt.map((row) =>(
+                                            row.address
+                                        ))
+                                    }
+                                </span>
                             </div>
-                            <div className="original_price">$629.99</div>
-                            <div className="product_price">$495.00</div>
+                            <b>Giá cho thuê:</b>
+                            <div className="original_price">
+                            
+                            {
+                                        postt.map((row) =>(
+                                            row.cost *1.5
+                                        ))
+                                    } vnd
+                            </div>
+                            
+                            <div className="product_price">
+                            
+                            {
+                                        postt.map((row) =>(
+                                            row.cost
+                                        ))
+                                    } vnd
+                            </div>
                             <ul className="star_rating">
                                 <li><i className="fa fa-star" aria-hidden="true" /></li>
                                 <li><i className="fa fa-star" aria-hidden="true" /></li>
@@ -324,24 +376,21 @@ function Discusion() {
                                 <li><i className="fa fa-star" aria-hidden="true" /></li>
                                 <li><i className="fa fa-star-o" aria-hidden="true" /></li>
                             </ul>
-                            <div className="product_color">
-                                <span>Select Color:</span>
-                                <ul>
-                                    <li style={{ background: '#e54e5d' }} />
-                                    <li style={{ background: '#252525' }} />
-                                    <li style={{ background: '#60b3f3' }} />
-                                </ul>
-                            </div>
+                            
                             <div className="quantity d-flex flex-column flex-sm-row align-items-sm-center">
-                                <span>Quantity:</span>
+                                <span>Diện Tích:</span>
                                 <div className="quantity_selector">
-                                    <span className="minus"><i className="fa fa-minus" aria-hidden="true" /></span>
-                                    <span id="quantity_value">1</span>
-                                    <span className="plus"><i className="fa fa-plus" aria-hidden="true" /></span>
+                                {
+                                        postt.map((row) =>(
+                                            row.dientich
+                                        ))
+                                    }
                                 </div>
-                                <div className="red_button add_to_cart_button"><a href="#">add to cart</a></div>
-                                <div className="product_favorite d-flex flex-column align-items-center justify-content-center" />
+                                
+                                
                             </div>
+                            <hr></hr>
+                            push cmt
                         </div>
                     </div>
                 </div>

@@ -96,7 +96,7 @@ function AddPost() {
         const selectedFilesArray = Array.from(selectedFiles);
 
         const imagesArray = selectedFilesArray.map((file) => {
-            return URL.createObjectURL(file);
+            (file);
         });
 
         setSelectedImages((previousImages) => previousImages.concat(imagesArray));
