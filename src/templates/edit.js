@@ -77,6 +77,8 @@ function Edit(){
     requestData();
     }, []);
     return (
+
+        
         
         <div class="container" style={{width:'1000px',}}>
             <h1>SUA BAI DANG</h1>
@@ -114,6 +116,10 @@ function Edit(){
             </div><br/>
             <button type="button" class="btn btn-success" onClick={_onEdit}style={{"margin":'10px 270px','margin-bottom':'30px'}}>Edit</button>
         </div>
+
+        
+
+        
     );
 }
 export default Edit;

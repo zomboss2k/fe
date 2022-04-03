@@ -6,7 +6,8 @@ import { getAPI } from '../service/api.js';
 import { useParams, useHistory } from 'react-router';
 import axios from 'axios';
 import Images from './images'
-import { FaTrash, FaElementor, FaWaze, FaHouseDamage, FaUserSlash, FaRegHandPointRight, FaThumbsUp } from "react-icons/fa";
+import InputGroup from 'react-bootstrap/InputGroup'
+import { FaTrash, FaElementor, FaWaze, FaHouseDamage, FaUserSlash, FaRegHandPointRight, FaThumbsUp,FaTrashAlt,FaHeart } from "react-icons/fa";
 import "./main_styles.css"
 import "./style.css";
 
@@ -82,6 +83,7 @@ function Discusion() {
             console.log("error: ", e);
         }
     }
+    
     const _onReport = async (id) => {
         try {
             const rs = await reportComment(id);
@@ -391,6 +393,46 @@ function Discusion() {
                             </div>
                             <hr></hr>
                             push cmt
+                            {comment.map((row) =>(<Card.Body>
+                                <Card.Text>
+                                    <h3 style={{'font-size':'30px','color':'green','font-weight':'bold'}}>{row.username}</h3>
+                                    <i style={{'font-size':'12px','color':'chocolate'}}>
+                                        {row.time.split('.')[0]}
+                                        <div style={{'float':'right','width':'10px','height':'10px'}}>
+                                        {row.username == name
+                                            ?<div>
+                                                <a href=''><FaTrashAlt fixedWidth /></a>
+                                                <a href=''><FaHeart fixedWidth/></a>{row.point}
+                                            </div>     
+                                            :<a href=''><FaHeart fixedWidth/> {row.point}</a>
+                                            }
+                                        </div>
+                                    </i>
+                                    
+                                    <p style={{'font-size':'20px','color':'blue'}}>{row.detail}</p>
+                                </Card.Text>
+                            </Card.Body>))}
+                            <Form>
+                            {
+                                islogin
+                                    ?   
+
+                                        <InputGroup className="mb-3">
+                                        <Form.Control
+                                        placeholder="Bình luận của bạn luôn công khai"
+                                        aria-label="Recipient's username"
+                                        aria-describedby="basic-addon2"
+                                        onChange={onValueChange}
+                                        />
+                                        <Button variant="outline-secondary" id="button-addon2" onClick={onSubmit}>
+                                        Đăng
+                                        </Button>
+                                        </InputGroup>
+                                    :<Form.Label htmlFor="disabledTextInput">Bạn phải đăng nhập trước</Form.Label>
+                                
+                            }
+                            
+                            </Form>
                         </div>
                     </div>
                 </div>
