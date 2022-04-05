@@ -131,11 +131,11 @@ function Headers() {
                             </div>
                             <nav className="navbar">
                                 <ul className="navbar_menu">
-                                    <li><a href="showbyid/1">Cho Thuê</a></li>
-                                    <li><a href="showbyid/2">Tìm Phòng</a></li>
-                                    <li><a href="showbyid/3">Ở Ghép</a></li>
-                                    <li><a href="showbyid/4">Căn Hộ</a></li>
-                                    <li><a href="showbyid/5">Other</a></li>
+                                    <li><a href="../showbyid/1">Cho Thuê</a></li>
+                                    <li><a href="../showbyid/2">Tìm Phòng</a></li>
+                                    <li><a href="../showbyid/3">Ở Ghép</a></li>
+                                    <li><a href="../showbyid/4">Căn Hộ</a></li>
+                                    <li><a href="../showbyid/5">Other</a></li>
                                 </ul>
                                 <ul className="navbar_user">
 
