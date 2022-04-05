@@ -133,7 +133,7 @@ function Index() {
                                 <div className="row">
                                     <div style={{ 'padding-left': '20px' }} >
                                         <Button variant="link" id='cmt' onClick={() => _onDiscusion(row.post_ID)}>
-                                            <img src="https://img.nhandan.com.vn/Files/Images/2020/07/26/nhat_cay-1595747664059.jpg" alt="dogs" class="img-thumbnail" style={{ 'width': '300px', 'padding': '0px 15px' }}></img>
+                                            <img src="https://vnn-imgs-f.vgcloud.vn/2020/03/03/15/nha-tro.jpg" alt="dogs" class="img-thumbnail" style={{ 'width': '300px', 'padding': '0px 15px' }}></img>
                                         </Button>
                                     </div>
                                     <div className="col">
