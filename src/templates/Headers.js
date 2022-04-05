@@ -6,7 +6,7 @@ import { useHistory } from 'react-router';
 import { useSnackbar } from 'notistack';
 import { FaRegTrashAlt, FaCommentAlt, FaElementor, FaWaze, FaHouseDamage, FaUserSlash } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
-
+import axios from 'axios';
 
 const getPostAPI = () => {
     return getAPI("/showpost");
@@ -14,12 +14,16 @@ const getPostAPI = () => {
 const deletePostAPI = (id) => {
     return getAPI('/deletepost/' + id);
 }
-const searchValue = (value) => {
-    return getAPI('/search/' + value);
+const srchValue = (data) => {
+    const url = "http://127.0.0.1:5000/api/adddataaSearch"
+    return axios.post(url, data)
+}
+const _searchValue = (value) => {
+    return getAPI('/search/'+value);
 }
 function Headers() {
     let name = "";
-    const [searchValue, setSearchValue] = useState({ value: '' });
+    const [searchValue, setSearchValue] = useState({ value: ''});
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
     const token = localStorage.getItem("token");
@@ -50,6 +54,7 @@ function Headers() {
     }
     const _onDelete = async (id) => {
         try {
+            
             const rs = await deletePostAPI(id);
             if (rs.status === 200) {
                 enqueueSnackbar("Xoa Thanh Cong", { variant: 'success' });
@@ -69,9 +74,24 @@ function Headers() {
         setSearchValue(prev => ({ ...prev, value: event.target.value }));
         console.log("your comment " + searchValue.value)
     }
-    const _onSearch = (value) => {
-        console.log(value);
-        history.push('/search/' + value)
+    const _onAddDatavalue = async()=>{
+        const data = new FormData();
+        data.append("value",searchValue.value)
+        data.append("username",name)
+        try {
+            const rs = await srchValue(data);
+            console.log(JSON.stringify(rs))
+            history.push('/search/'+searchValue.value)
+            _searchValue(searchValue.value);
+        } catch (e) {
+            console.log("error: " + e);
+            enqueueSnackbar("Vui Lòng Thử Lại ", { variant: 'error' });
+        }
+        
+    }
+    const _onSearch = async() => {
+        
+        history.push('/search/')
     }
 
     return (
@@ -141,7 +161,7 @@ function Headers() {
 
                                     <Form inline>
                                         <FormControl type="text" placeholder="enter your key..." className="mr-sm-2" name='searchValue' onChange={onValueChange} />
-                                        <Button className="fa fa-search" variant="outline-success" id='search' onClick={() => _onSearch(searchValue.value)}></Button>
+                                        <Button className="fa fa-search" variant="outline-success" id='search' onClick={_onAddDatavalue}></Button>
                                     </Form>
 
                                 </ul>
