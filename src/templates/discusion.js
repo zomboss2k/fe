@@ -36,6 +36,9 @@ const getidimage=(id)=>{
 const getimage = (id) => {
     return getAPI('/getimage/'+id)
 }
+const getname = (usr)=>{
+    return getAPI('/getname/'+usr)
+}
 function Discusion() {
     let { id } = useParams();
     const history = useHistory();
@@ -45,7 +48,7 @@ function Discusion() {
     let name = "";
     const token = localStorage.getItem("token");
     console.log("token fist:" + token);
-
+    const [fname,setFname] = useState("");
     let islogin = false;
     if (token != null) {
         islogin = true;
@@ -103,6 +106,7 @@ function Discusion() {
     const _getimage = (id)=>{
         return ("http://localhost:5000/api/getimage/"+id)
     }
+    
     const onSubmit = async () => {
         const data = new FormData();
         data.append("comment", cmt.comment);
@@ -148,7 +152,8 @@ function Discusion() {
                 console.log("error: ",e);
             }
         };
-        requestid();
+        requestData();
+        
         const requestcmt = async (props) => {
             try {
                 const rs = await showbyID(id);
