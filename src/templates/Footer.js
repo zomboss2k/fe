@@ -42,7 +42,7 @@ const Footer = () => {
                                     <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                                     <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
                                     <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -50,7 +50,7 @@ const Footer = () => {
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="footer_nav_container">
-                                <div class="cr">©2021 All Rights Reserverd. Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">Jassa</a> &amp; Loved by <a href="https://therichpost.com">Jassa</a></div>
+                                <div class="cr">©2022 All Rights Reserverd. Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">Cao Bắc Hội</a> &amp; Loved by <a href="https://therichpost.com">Cao Bắc Hội</a></div>
                             </div>
                         </div>
                     </div>

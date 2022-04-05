@@ -11,10 +11,12 @@ import {
     Row,
     Col,
 } from "react-bootstrap";
+import { FiEdit } from "react-icons/fi";
 import { getAPI } from "../service/api.js";
 import { useHistory, useParams } from "react-router";
 import { useSnackbar } from "notistack";
 import {
+    FaRegTrashAlt,
     FaCommentAlt,
     FaElementor,
     FaWaze,
@@ -96,50 +98,45 @@ function Search() {
     return (
         <>
             <Headers />
-            <div className="container" style={{ "margin-top": "150px" }}>
-                
-                <div className="content" style={{ padding: "10px 0px" }}>
-                    {postt.map((row) => (
-                        <Card>
-                            <Card.Header>{row.type}</Card.Header>
-                            <Card.Body>
-                                <Card.Title>{row.title}</Card.Title>
-                                <Card.Text>{row.detail}</Card.Text>
-                                <Button
-                                    variant="link"
-                                    id="cmt"
-                                    onClick={() => _onDiscusion(row.post_ID)}
-                                >
-                                    Discusion
-                                </Button>
-                                {name === row.username ? (
-                                    <div
-                                        className="onCRUD"
-                                        style={{ float: "right", "margin-right": "100px" }}
-                                    >
-                                        <Button
-                                            variant="warning"
-                                            onClick={() => _onEdit(row.post_ID)}
-                                            style={{ "margin-right": "30px" }}
-                                        >
-                                            Edit
-                                        </Button>
-                                        <Button
-                                            variant="danger"
-                                            onClick={() => _onDelete(row.post_ID)}
-                                        >
-                                            Delete
+            <div className="container" style={{ "margin-top": "200px" }}>
+            <div className="content" style={{ 'padding': '10px 0px' }}>
+                        {postt.map((row) => (
+                            <Card>
+                                <Card.Header>{row.type}
+                                    {name == row.username
+                                        ? <div className="onCRUD" style={{ float: 'right', 'margin-right': '100px' }}>
+                                            <Button variant="warning" onClick={() => _onEdit(row.post_ID)} style={{ 'margin-right': '30px' }}><FiEdit /></Button>
+                                            <Button variant="danger" onClick={() => _onDelete(row.post_ID)}><FaRegTrashAlt /></Button>
+                                        </div>
+                                        : ""
+                                    }
+                                </Card.Header>
+                                <div className="row">
+                                    <div style={{ 'padding-left': '20px' }} >
+                                        <Button variant="link" id='cmt' onClick={() => _onDiscusion(row.post_ID)}>
+                                            <img src="https://vnn-imgs-f.vgcloud.vn/2020/03/03/15/nha-tro.jpg" alt="dogs" class="img-thumbnail" style={{ 'width': '300px', 'padding': '0px 15px' }}></img>
                                         </Button>
                                     </div>
-                                ) : (
-                                    "Posted by: " + row.username
-                                )}
-                            </Card.Body>
-                        </Card>
-                    ))}
-                </div>
-                <Footer />
+                                    <div className="col">
+
+                                        <Card.Body>
+                                            <Card.Title>{row.title}</Card.Title>
+                                            {name === row.username
+                                                ? <i style={{ 'color': 'green', 'font-weight': 'italic', 'font-size': '15px' }}>Giá thuê: {row.cost}</i>
+                                                : <i style={{ 'color': 'green', 'font-weight': 'italic', 'font-size': '15px' }}>Người đăng : {row.username}</i>
+                                            }
+                                            <Card.Text>{row.detail}</Card.Text>
+                                            {/*     <Button variant="link" id='cmt'onClick={() => _onDiscusion(row.post_ID)}><FaCommentAlt /> Discusion</Button> */}
+                                        </Card.Body>
+
+                                    </div>
+                                </div>
+                            </Card>
+                        ))}
+                    </div>
+                
             </div>
+                <Footer />
         </>
     );
 }
