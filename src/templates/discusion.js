@@ -143,6 +143,7 @@ function Discusion() {
                     const rs= await getname(result.data[0]['username']);
                         if(rs.status === 200){
                             setInfo(rs.data);
+                            console.log('info'+info);
                         }
                     
                 }
