@@ -14,12 +14,9 @@ const getPostAPI = () => {
 const deletePostAPI = (id) => {
     return getAPI('/deletepost/' + id);
 }
-const searchValue = (value) => {
-    return getAPI('/search/' + value);
-}
 function Index() {
     let name = "";
-    const [searchValue, setSearchValue] = useState({ value: '' });
+    const [searchValue, setSearchValue] = useState({ value: '' ,username:''});
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
     const token = localStorage.getItem("token");
@@ -48,6 +45,9 @@ function Index() {
     const _onDiscusion = (id) => {
         history.push('discusion/' + id);
     }
+    useEffect(() => {
+        document.title = "Cao Bắc Hội"
+    }, []);
     const _onDelete = async (id) => {
         try {
             const rs = await deletePostAPI(id);

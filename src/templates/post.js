@@ -52,7 +52,7 @@ function AddPost() {
         name = token.split('=')[1];
     }
     useEffect(() => {
-        document.title = "Add Post"
+        document.title = "Cao Bắc Hội - Thêm Bài Viết"
     }, []);
     ///
     const onValueChangeTitle = (event) => {

@@ -84,7 +84,7 @@ function Resigter() {
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-outline">
-                                                    <label class="form-label" for="form3Example1m">Họ</label>
+                                                    <label class="form-label" for="form3Example1m">Họ và tên</label>
                                                     <input type="text" id="firstName" class="form-control form-control-lg"
                                                         onChange={onValueChangeName} required="required" />
                                                 </div>
@@ -101,11 +101,6 @@ function Resigter() {
                                             <label class="form-label" for="inputemail">Email</label>
                                             <input type="email" class="form-control form-control-lg" name="email"
                                                 id="inputemail" onChange={onValueChangeEmail} required="required" />
-                                        </div>
-
-                                        <div class="form-outline mb-2">
-                                            <label class="form-label" for="form3Example8">Địa chỉ</label>
-                                            <input type="text" id="form3Example8" class="form-control form-control-lg" />
                                         </div>
 
                                             <label class="form-label" for="form3Example8">Số điện thoại</label>

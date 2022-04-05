@@ -80,8 +80,14 @@ function Headers() {
         data.append("username",name)
         try {
             const rs = await srchValue(data);
-            console.log(JSON.stringify(rs))
-            history.push('/search/'+searchValue.value)
+            if(rs.status == 200){
+                console.log(JSON.stringify(rs))
+                history.push('/search/'+searchValue.value)
+            }
+            else{
+                console.log("Loi");
+                enqueueSnackbar("Vui Lòng Thử Lại !", { variant: "error" });
+            }
             _searchValue(searchValue.value);
         } catch (e) {
             console.log("error: " + e);
@@ -150,17 +156,17 @@ function Headers() {
                                 <a href="/">colo<span>home</span></a>
                             </div>
                             <nav className="navbar">
-                                <ul className="navbar_menu">
-                                    <li><a href="showbyid/1">Cho Thuê</a></li>
-                                    <li><a href="showbyid/2">Tìm Phòng</a></li>
-                                    <li><a href="showbyid/3">Ở Ghép</a></li>
-                                    <li><a href="showbyid/4">Căn Hộ</a></li>
-                                    <li><a href="showbyid/5">Other</a></li>
+                            <ul className="navbar_menu">
+                                    <li><a href="../showbyid/1">Cho Thuê</a></li>
+                                    <li><a href="../showbyid/2">Tìm Phòng</a></li>
+                                    <li><a href="../showbyid/3">Ở Ghép</a></li>
+                                    <li><a href="../showbyid/4">Căn Hộ</a></li>
+                                    <li><a href="../showbyid/5">Khác</a></li>
                                 </ul>
                                 <ul className="navbar_user">
 
                                     <Form inline>
-                                        <FormControl type="text" placeholder="enter your key..." className="mr-sm-2" name='searchValue' onChange={onValueChange} />
+                                        <FormControl type="text" placeholder="Nhập yêu cầu của bạn ... " className="mr-sm-2" name='searchValue' onChange={onValueChange} />
                                         <Button className="fa fa-search" variant="outline-success" id='search' onClick={_onAddDatavalue}></Button>
                                     </Form>
 

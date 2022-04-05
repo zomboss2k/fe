@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
@@ -23,12 +23,16 @@ function Login() {
     else {
         <Redirect to='login' />
     }
+    
     const onValueChangeUsername = (event) => {
         setInfo(prev => ({ ...prev, username: event.target.value }));
     }
     const onValueChangePassword = (event) => {
         setInfo(prev => ({ ...prev, password: event.target.value }));
     }
+    useEffect(() => {
+        document.title = "Cao Bắc Hội - Đăng Nhập"
+    }, []);
     const onSubmit = async () => {
         const data = new FormData();
         data.append("username", info.username);

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Button, FormControl, Dropdown, Form, Alert, Row, Col } from 'react-bootstrap';
+import { Card, Button, FormControl, Dropdown, Form, Alert, Row, Col,ListGroup,ListGroupItem } from 'react-bootstrap';
 import { useSnackbar } from 'notistack';
 import { getAPI } from '../service/api.js';
 import { useParams, useHistory } from 'react-router';
 import axios from 'axios';
+
 import Images from './images'
 import InputGroup from 'react-bootstrap/InputGroup'
 import { FaTrash, FaElementor, FaWaze, FaHouseDamage, FaUserSlash, FaRegHandPointRight, FaThumbsUp,FaTrashAlt,FaHeart } from "react-icons/fa";
@@ -57,7 +58,7 @@ function Discusion() {
     }
     const[ids,setids] = useState([]);
     const[files,setfiles] = useState([]);
-    
+    const [info,setInfo] = useState([]);
     const onValueSChange = (event) =>{
         setSearchValue(prev =>({...prev, value:event.target.value}));
         console.log("your comment "+searchValue.value)
@@ -66,14 +67,18 @@ function Discusion() {
         console.log(value);
         history.push('/search/' + value)
     }
+    const _onviewuser =(usr)=>{
+        history.push('/infouser/'+usr);
+    }
     const [comment, setComment] = useState([]);
     const [cmt, setCmt] = useState({ comment: '', username: name, post_ID: id });
     const onValueChange = (event) => {
         setCmt(prev => ({ ...prev, comment: event.target.value }));
         console.log("your comment " + cmt.comment)
     }
+    const [uname,setUname]= useState("");
     useEffect(() => {
-        document.title = "Discusion-Abc Forum"
+        document.title = "Cao Bắc Hội - Thảo Luận"
     }, []);
     const _onDeleteCmt = async (id) => {
         try {
@@ -134,6 +139,12 @@ function Discusion() {
                 const result = await discusionAPI(id);
                 if (result.status === 200) {
                     setPostt(result.data);
+                    //setUname(result.data[0]['username']);
+                    const rs= await getname(result.data[0]['username']);
+                        if(rs.status === 200){
+                            setInfo(rs.data);
+                        }
+                    
                 }
             } catch (e) {
                 console.log("error: ", e);
@@ -141,6 +152,7 @@ function Discusion() {
     
     };
     requestData();
+        
         const requestid = async (props) => {
             try{
                 const rs = await getidimage(id);
@@ -152,7 +164,7 @@ function Discusion() {
                 console.log("error: ",e);
             }
         };
-        requestData();
+        requestid();
         
         const requestcmt = async (props) => {
             try {
@@ -287,7 +299,7 @@ function Discusion() {
                         <div className="breadcrumbs d-flex flex-row align-items-center">
                             <ul>
                                 <li><a href="/">Home</a></li>
-                                <li><a href="categories.html"><i className="fa fa-angle-right" aria-hidden="true" />
+                                <li><a href='#'><i className="fa fa-angle-right" aria-hidden="true" />
                                     {
                                         postt.map((row) =>(
                                             row.type
@@ -322,14 +334,39 @@ function Discusion() {
                                         </ul>
                                     </div>
                                 </div>
-                                <div className="col-lg-9 image_col order-lg-2 order-1">
+                                {/* <div className="col-lg-9 image_col order-lg-2 order-1">
                                     <div className="single_product_image">
                                         <div className="single_product_image_background" src={selectedImg} alt="Selected" />
                                     </div>
-                                </div>
+                                </div> */}
+                            </div>
+                            <div className='info' style={{'margin-top':'100px'}}>
+                                {info.map((row)=>(
+                                     <Card style={{ width: '18rem' }}>
+                                     <Card.Img variant="top" />
+                                     <Card.Body>
+                                         <Card.Title><h3>{row.name}</h3></Card.Title>
+                                         <Card.Text>
+                                         Một người dùng sử dụng website thường xuyên và trao đổi thân thiện. Tỉ lệ phản hồi 99% dưới 5 phút.
+                                         </Card.Text>
+                                     </Card.Body>
+                                     <ListGroup className="list-group-flush">
+                                         <ListGroupItem>{row.email}</ListGroupItem>
+                                         <ListGroupItem>{row.phone}</ListGroupItem>
+                                         
+                                     </ListGroup>
+                                     <Card.Body>
+                                         <Card.Link href="#">Gọi</Card.Link>
+                                         <Card.Link href="#">Gửi Email</Card.Link>
+                                     </Card.Body>
+                                     </Card>
+                                ))}
+                               
                             </div>
                         </div>
+                        
                     </div>
+                    
                     <div className="col-lg-5">
                         <div className="product_details">
                             <div className="product_details_title">
@@ -397,7 +434,7 @@ function Discusion() {
                                 
                             </div>
                             <hr></hr>
-                            push cmt
+                            
                             {comment.map((row) =>(<Card.Body>
                                 <Card.Text>
                                     <h3 style={{'font-size':'30px','color':'green','font-weight':'bold'}}>{row.username}</h3>

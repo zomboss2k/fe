@@ -12,7 +12,7 @@ import ShowType from './templates/showtype';
 import Search from './templates/search';
 import Chat from './templates/chat';
 import Headers from './templates/Headers';
-
+import InfoUser from './templates/infouser';
 import Footer from './templates/Footer';
 
 
@@ -40,6 +40,7 @@ function App() {
           <Route path="/chat">
             <Chat />
           </Route>
+          <Route path="/infouser/:value"children={<InfoUser/>}/>
           <Route path="/search/:value" children={<Search />} />
           <Route path="/discusion/:id" children={<Discusion />} />
           <Route path="/showbyid/:id" children={<ShowType />} />
