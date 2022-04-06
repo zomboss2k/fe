@@ -35,6 +35,7 @@ function Admin() {
     var usr = [];
     const [cmt,setCmt]= useState([]);
     const [pst,setPst] = useState([]);
+    
     useEffect(() => {
         const requestData = async (props) => {
             try {
@@ -88,6 +89,7 @@ function Admin() {
     {pst.map((row)=>{
         cpst.push(row.type)
     })}
+    var sum = count.reduce((a,b)=> a+b,0)
     return (
         <>
             <div className="container-scroller">
@@ -292,6 +294,13 @@ function Admin() {
                                                             <div className="mr-3"><i className="mdi mdi-signal-cellular-outline icon-md" /></div>
                                                             <div className="font-weight-bold mr-sm-4">
                                                                 <div>{usr.length} Lượt Bình Luận</div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div className="d-flex pt-3 justify-content-between">
+                                                            <div className="mr-3"><i className="mdi mdi-signal-cellular-outline icon-md" /></div>
+                                                            <div className="font-weight-bold mr-sm-4">
+                                                                <div>{sum} Lượt Tìm Kiếm </div>
                                                                 
                                                             </div>
                                                         </div>

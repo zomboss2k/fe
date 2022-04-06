@@ -125,7 +125,7 @@ function Search(){
                                         <Card.Title>{row.title}</Card.Title>
                                         {name === row.username
                                             ? <i style={{ 'color': 'green', 'font-weight': 'italic', 'font-size': '15px' }}>Giá thuê: {row.cost}</i>
-                                            : <i style={{ 'color': 'green', 'font-weight': 'italic', 'font-size': '15px' }}>Người đăng : {row.username}</i>
+                                            : <i style={{ 'color': 'green', 'font-weight': 'italic', 'font-size': '15px' }}>Người đăng : {row.username}-- Giá thuê: {row.cost}</i>
                                         }
                                         <Card.Text>{row.detail}</Card.Text>
                                         {/*     <Button variant="link" id='cmt'onClick={() => _onDiscusion(row.post_ID)}><FaCommentAlt /> Discusion</Button> */}
