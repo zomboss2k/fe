@@ -17,7 +17,7 @@ function Resigter() {
     const [info, setInfo] = useState({ name:'',username: '', password: '', repassword: '', email: '', phone: '' })
     //title
     useEffect(() => {
-        document.title = "Resigter-Abc Forum"
+        document.title = "Cao Bắc Hội - Đăng Ký"
     }, []);
     // -----------------------value change----------------------
     const onValueChangeName = (event) => {
