@@ -14,6 +14,8 @@ import Chat from './templates/chat';
 import Headers from './templates/Headers';
 import InfoUser from './templates/infouser';
 import Footer from './templates/Footer';
+import Admin from './templates/admin/Admin';
+
 
 
 function App() {
@@ -21,6 +23,9 @@ function App() {
     <SnackbarProvider>
       <Router>
         <Switch>
+        <Route path="/admin">
+            <Admin />
+          </Route>
 
           <Route path="/login">
             <Headers />
