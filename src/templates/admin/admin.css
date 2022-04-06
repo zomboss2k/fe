@@ -21758,7 +21758,7 @@
   /* Sidebar */
   .sidebar {
     min-height: calc(100vh - 60px);
-    background: #ec37fc;
+    background: #436e21;
     font-family: "Karla", sans-serif;
     font-weight: normal;
     padding: 0;
@@ -22051,7 +22051,7 @@
   }
   
   .navbar .navbar-brand-wrapper {
-    background: #ec37fc;
+    background: #436e21;
     transition: width 0.25s ease, background 0.25s ease;
     -webkit-transition: width 0.25s ease, background 0.25s ease;
     -moz-transition: width 0.25s ease, background 0.25s ease;

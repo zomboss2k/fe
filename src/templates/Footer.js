@@ -8,15 +8,15 @@ const Footer = () => {
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
-                                <h4>Newsletter</h4>
-                                <p>Subscribe to our newsletter and get 20% off your first purchase</p>
+                                <h4>COLOHOME</h4>
+                                <p>Theo dõi kênh chúng tôi để theo dõi nhiều thông tin hữu ích!</p>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <form action="post">
                                 <div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
                                     <input id="newsletter_email" type="email" placeholder="Your email" required="required" data-error="Valid email is required." />
-                                    <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">subscribe</button>
+                                    <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">Theo dõi</button>
                                 </div>
                             </form>
                         </div>
@@ -50,7 +50,7 @@ const Footer = () => {
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="footer_nav_container">
-                                <div class="cr">©2021 All Rights Reserverd. Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">Jassa</a> &amp; Loved by <a href="https://therichpost.com">Jassa</a></div>
+                                <div class="cr">©2021 All Rights Reserverd. Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">CBH</a> &amp; Loved by <a href="#">Cao Bắc Hội</a></div>
                             </div>
                         </div>
                     </div>

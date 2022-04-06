@@ -484,6 +484,7 @@ section
 	position: absolute;
 	right: 0;
 	top: 120%;
+    padding: 0;
 	margin: 0;
 	width: 100%;
 	background: #FFFFFF;
@@ -571,6 +572,7 @@ section
 }
 .navbar_user
 {
+	margin-top: 20px;
 	margin-left: 37px;
 }
 .navbar_user li
@@ -920,7 +922,7 @@ section
 5. Single Product Section
 *********************************/
 
-/* .single_product_container
+.single_product_container
 {
 	margin-top: 150px;
 	padding-bottom: 80px;
@@ -977,7 +979,7 @@ section
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
-} */
+}
 
 /*********************************
 6. Product Details

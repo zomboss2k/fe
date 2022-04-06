@@ -239,7 +239,14 @@ function AddPost() {
                                     {selectedImages.length === 1 ? "" : "S"}
                                 </button>
                             ))}
-
+                        {selectedImages.length==0 ?(
+                            <div class="list-group">
+                            <button type="button" class="list-group-item list-group-item-action active" onClick={onAdd}>Gửi</button>
+                            
+                            </div>
+                            )
+                        :("")
+                        }
                         <div className="images">
                             {selectedImages &&
                                 selectedImages.map((image, index) => {

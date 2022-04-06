@@ -113,7 +113,7 @@ function Index() {
                     <div class="row">
                         <div class="col text-center">
                             <div class="section_title new_arrivals_title">
-                                <h2>New Arrivals</h2>
+                                <h2>Bài đăng mới</h2>
                             </div>
                         </div>
                     </div>

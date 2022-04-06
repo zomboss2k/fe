@@ -7,6 +7,7 @@ import { useSnackbar } from 'notistack';
 import { FaRegTrashAlt, FaCommentAlt, FaElementor, FaWaze, FaHouseDamage, FaUserSlash } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import axios from 'axios';
+import "./index.css"
 
 const getPostAPI = () => {
     return getAPI("/showpost");

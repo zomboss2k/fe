@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Button, FormControl, Dropdown, Form, Alert, Row, Col,ListGroup,ListGroupItem } from 'react-bootstrap';
+import { Card, Button, FormControl, Dropdown, Form, Alert, Row, Col,ListGroup,ListGroupItem,Container } from 'react-bootstrap';
 import { useSnackbar } from 'notistack';
 import { getAPI } from '../service/api.js';
 import { useParams, useHistory } from 'react-router';
@@ -9,8 +9,7 @@ import axios from 'axios';
 import Images from './images'
 import InputGroup from 'react-bootstrap/InputGroup'
 import { FaTrash, FaElementor, FaWaze, FaHouseDamage, FaUserSlash, FaRegHandPointRight, FaThumbsUp,FaTrashAlt,FaHeart } from "react-icons/fa";
-import "./main_styles.css"
-import "./style.css";
+// import "./main_styles.css"
 
 const discusionAPI = (id) => {
     return getAPI("/selectpost/" + id);
@@ -321,18 +320,37 @@ function Discusion() {
                     <div className="col-lg-7">
                         <div className="single_product_pics">
                             <div className="row">
-                                <div className="col-lg-3 thumbnails_col order-lg-1 order-2">
+                                <div className="col-lg-12 thumbnails_col order-lg-1 order-2">
                                     <div className="single_product_thumbnails">
+                                        {/* <div className="row">
+                                            
+                                        <div className="col-lg-6">
+
                                         <ul>
+                                            
+                                        </ul>
+</div>
+                                        </div> */}
+                                        <Container>
+                                            <Row>
                                             {ids.map((index) => (
-                                                <li><img key={index}
+                                                <Col xs><img key={index}
                                                     src={_getimage(index)}
                                                     alt="dog"
                                                     onClick=""
-                                                    /></li>
+                                                    width="250" height="200"
+                                                    />
+                                                    </Col>
                                             ))}
-                                        </ul>
+                                                
+                                            </Row>
+                                            </Container>
                                     </div>
+                                </div>
+                                
+                                <div className='col'>
+                                    
+                                
                                 </div>
                                 {/* <div className="col-lg-9 image_col order-lg-2 order-1">
                                     <div className="single_product_image">
@@ -433,6 +451,7 @@ function Discusion() {
                                 
                                 
                             </div>
+                            
                             <hr></hr>
                             
                             {comment.map((row) =>(<Card.Body>
@@ -477,6 +496,7 @@ function Discusion() {
                             </Form>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>

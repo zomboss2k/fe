@@ -8,15 +8,86 @@ import "./vendors/font-awesome/css/font-awesome.min.css"
 import "./vendors/jquery-bar-rating/fontawesome-stars-o.css"
 import "./vendors/jquery-bar-rating/fontawesome-stars.css"
 
-
+import { Bar } from "react-chartjs-2";
+import { Chart as ChartJS } from 'chart.js/auto'
+import { Chart }            from 'react-chartjs-2';
+import { getAPI } from '../../service/api.js';
+const getdetails = () =>{
+    return getAPI('/selectdetailcmt');
+}
+const getallport = ()=>{
+    return getAPI('/showpost');
+}
 
 // import { getAPI } from '../../service/api.js';
 
 // const getuser = (usr) => {
 //     return getAPI('/showname/' + usr);
 // }
+const getcmt=()=>{
+    return getAPI('/showcomment');
+}
 function Admin() {
+    let cpst = [];
+    const [detail,setDetail] = useState([]);
+    var nd = [];
+    var count = [];
+    var usr = [];
+    const [cmt,setCmt]= useState([]);
+    const [pst,setPst] = useState([]);
+    useEffect(() => {
+        const requestData = async (props) => {
+            try {
+                const result = await getdetails();
+                if (result.status === 200) {
+                    setDetail(result.data);
+                    console.log(result.data)
+                }
+            } catch (e) {
+                console.log("error: ", e);
+            }
+        };
+        requestData();
+        const getallcmt = async ()=>{
+            try{
+                const rs = await getcmt();
+                if(rs.status === 200){
+                    setCmt(rs.data)
+                    console.log("data: "+rs.data)
+                }
+            }
+            catch(e){
 
+            }
+        };
+        getallcmt();
+        const getpost = async ()=>{
+            try{
+                const rs = await getallport();
+                if(rs.status === 200){
+                    setPst(rs.data)
+                    console.log("data: "+rs.data)
+                }
+            }
+            catch(e){
+
+            }
+        };
+        getpost();
+    }, []);
+    {detail.map((row) => {
+        console.log("detail: "+row.detail)
+        console.log("count: "+row.count)
+        nd.push(row.detail);
+        count.push(row.count);
+    })}
+    {cmt.map((row)=>{
+        usr.push(row.username)
+        
+    })}
+    {pst.map((row)=>{
+        cpst.push(row.type)
+    })}
     return (
         <>
             <div className="container-scroller">
@@ -122,13 +193,13 @@ function Admin() {
                     <nav className="sidebar sidebar-offcanvas" id="sidebar">
                         <div className="user-profile">
                             <div className="user-image">
-                                <img src={require("./images/faces/face28.png").default} />
+                                <img src={require("./images/faces/user.png").default} />
                             </div>
                             <div className="user-name">
-                                Edward Spencer
+                                Cao Bắc Hội
                             </div>
                             <div className="user-designation">
-                                Developer
+                                Developer - 18CT3 DAU
                             </div>
                         </div>
                         <ul className="nav">
@@ -204,29 +275,38 @@ function Admin() {
                         <div className="content-wrapper">
                             <div className="row">
                                 <div className="col-sm-12 mb-4 mb-xl-0">
-                                    <h4 className="font-weight-bold text-dark">Hi, welcome back!</h4>
-                                    <p className="font-weight-normal mb-2 text-muted">APRIL 1, 2019</p>
+                                    <h4 className="font-weight-bold text-dark">Hi, welcome Colo Home!</h4>
                                 </div>
                             </div>
                             <div className="row mt-3">
                                 <div className="col-xl-3 flex-column d-flex grid-margin stretch-card">
                                     <div className="row flex-grow">
                                         <div className="col-sm-12 grid-margin stretch-card">
-                                            <div className="card">
-                                                <div className="card-body">
-                                                    <h4 className="card-title">Customers</h4>
-                                                    <p>23% increase in conversion</p>
-                                                    <h4 className="text-dark font-weight-bold mb-2">43,981</h4>
-                                                    <canvas id="customers" />
+                                        <div className="card">
+                                        <div className="card-body">
+                                            <h4 className="card-title mb-3">Lượt Tương Tác</h4>
+                                            <div className="row">
+                                                <div className="col-sm-12">
+                                                    <div className="text-dark">
+                                                        <div className="d-flex pt-3 justify-content-between">
+                                                            <div className="mr-3"><i className="mdi mdi-signal-cellular-outline icon-md" /></div>
+                                                            <div className="font-weight-bold mr-sm-4">
+                                                                <div>{usr.length} Lượt Bình Luận</div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
                                         </div>
                                         <div className="col-sm-12 stretch-card">
                                             <div className="card">
                                                 <div className="card-body">
-                                                    <h4 className="card-title">Orders</h4>
-                                                    <p>6% decrease in earnings</p>
-                                                    <h4 className="text-dark font-weight-bold mb-2">55,543</h4>
+                                                    <h4 className="card-title">Bài Viết Mới</h4>
+                                                    <p>Nhiều hơn 2% so với 3 tháng trước</p>
+                                                    <h4 className="text-dark font-weight-bold mb-2">{cpst.length} Bài Đăng</h4>
                                                     <canvas id="orders" />
                                                 </div>
                                             </div>
@@ -236,15 +316,27 @@ function Admin() {
                                 <div className="col-xl-9 d-flex grid-margin stretch-card">
                                     <div className="card">
                                         <div className="card-body">
-                                            <h4 className="card-title">Website Audience Metrics</h4>
-                                            <div className="row">
-                                                <div className="col-lg-5">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit amet cumque cupiditate</p>
-                                                </div>
-                                                <div className="col-lg-7">
-                                                    <div className="chart-legends d-lg-block d-none" id="chart-legends" />
-                                                </div>
-                                            </div>
+                                        <Bar
+                                                        data={{
+                                                        labels: nd,
+                                                        datasets: [
+                                                            {
+                                                            label: "Lượt Tìm Kiếm - Quan Tâm",
+                                                            backgroundColor: [
+                                                                "#3e95cd"
+                                                            ],
+                                                            data: count
+                                                            }
+                                                        ]
+                                                        }}
+                                                        options={{
+                                                        legend: { display: false },
+                                                        title: {
+                                                            display: true,
+                                                            text: "Biểu đồ lượt tìm kiếm trong tháng"
+                                                        }
+                                                        }}
+                                                    />
                                             <div className="row">
                                                 <div className="col-sm-12">
                                                     <canvas id="web-audience-metrics-satacked" className="mt-3" />
@@ -341,51 +433,7 @@ function Admin() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-xl-4 grid-margin stretch-card">
-                                    <div className="card">
-                                        <div className="card-body">
-                                            <h4 className="card-title mb-3">Recent Activity</h4>
-                                            <div className="row">
-                                                <div className="col-sm-12">
-                                                    <div className="text-dark">
-                                                        <div className="d-flex pb-3 border-bottom justify-content-between">
-                                                            <div className="mr-3"><i className="mdi mdi-signal-cellular-outline icon-md" /></div>
-                                                            <div className="font-weight-bold mr-sm-4">
-                                                                <div>Deposit has updated to Paid</div>
-                                                                <div className="text-muted font-weight-normal mt-1">32 Minutes Ago</div>
-                                                            </div>
-                                                            <div><h6 className="font-weight-bold text-info ml-sm-2">$325</h6></div>
-                                                        </div>
-                                                        <div className="d-flex pb-3 pt-3 border-bottom justify-content-between">
-                                                            <div className="mr-3"><i className="mdi mdi-signal-cellular-outline icon-md" /></div>
-                                                            <div className="font-weight-bold mr-sm-4">
-                                                                <div>Your Withdrawal Proceeded</div>
-                                                                <div className="text-muted font-weight-normal mt-1">45 Minutes Ago</div>
-                                                            </div>
-                                                            <div><h6 className="font-weight-bold text-info ml-sm-2">$4987</h6></div>
-                                                        </div>
-                                                        <div className="d-flex pb-3 pt-3 border-bottom justify-content-between">
-                                                            <div className="mr-3"><i className="mdi mdi-signal-cellular-outline icon-md" /></div>
-                                                            <div className="font-weight-bold mr-sm-4">
-                                                                <div>Deposit has updated to Paid                            </div>
-                                                                <div className="text-muted font-weight-normal mt-1">1 Days Ago</div>
-                                                            </div>
-                                                            <div><h6 className="font-weight-bold text-info ml-sm-2">$5391</h6></div>
-                                                        </div>
-                                                        <div className="d-flex pt-3 justify-content-between">
-                                                            <div className="mr-3"><i className="mdi mdi-signal-cellular-outline icon-md" /></div>
-                                                            <div className="font-weight-bold mr-sm-4">
-                                                                <div>Deposit has updated to Paid</div>
-                                                                <div className="text-muted font-weight-normal mt-1">3 weeks Ago</div>
-                                                            </div>
-                                                            <div><h6 className="font-weight-bold text-info ml-sm-2">$264</h6></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                             <div className="row">
                                 <div className="col-xl-9 grid-margin-lg-0 grid-margin stretch-card">
@@ -701,12 +749,7 @@ function Admin() {
                         </div>
                         {/* content-wrapper ends */}
                         {/* partial:partials/_footer.html */}
-                        <footer className="footer">
-                            <div className="d-sm-flex justify-content-center justify-content-sm-between">
-                                <span className="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
-                                <span className="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard templates</a> from Bootstrapdash.com</span>
-                            </div>
-                        </footer>
+                       
                         {/* partial */}
                     </div>
                     {/* main-panel ends */}
